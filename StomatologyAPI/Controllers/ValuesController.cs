@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StomatologyAPI.Abstract;
+using StomatologyAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +12,13 @@ namespace StomatologyAPI.Controllers
     [Authorize]
     public class ValuesController : ApiController
     {
+        IRepository<Category> rep;
+
+        public ValuesController(IUnitOfWork uof)
+        {
+            rep = uof.GetRepository<Category>();
+        }
+
         // GET api/values
         public IEnumerable<string> Get()
         {
