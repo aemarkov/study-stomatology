@@ -10,11 +10,16 @@ namespace StomatologyAPI.Models
     /// <summary>
     /// Контекст базы данных
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
         public ApplicationDbContext()
-            : base("SQLExpress", throwIfV1Schema: false)
+            : base("SQLExpress")
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
 
         public static ApplicationDbContext Create()

@@ -10,12 +10,12 @@ namespace StomatologyAPI.Models.Abstract
     /// <summary>
     /// Базовый класс модели
     /// </summary>
-    public abstract class AbstractModel
+    public abstract class AbstractModel : IModel
     {
         /// <summary>
         /// Первичный ключ
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
     }
 
 }

@@ -25,12 +25,9 @@ namespace StomatologyAPI.Models
         //Пациент
         [Required]
         public int PatientID { get; set; }
-        //public  Patient Patient { get; set; }
 
         //Врач
-        [Required]
-        public int DoctorID { get; set; }
-        public Doctor Doctor { get; set; }
+        public int? DoctorID { get; set; }
         
         /// <summary>
         /// Выполненные процедуры

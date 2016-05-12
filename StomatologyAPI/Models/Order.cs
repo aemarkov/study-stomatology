@@ -36,9 +36,7 @@ namespace StomatologyAPI.Models
 
 
         //Зубной техник
-        [Required]
-        public int DentalTechnicanID { get; set; }
-        public DentalTechnican Technican { get; set; }
+        public int? DentalTechnicanID { get; set; }
 
 
         //Информация о клинике
