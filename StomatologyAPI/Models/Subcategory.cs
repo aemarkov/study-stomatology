@@ -31,7 +31,7 @@ namespace StomatologyAPI.Models
         /// Связь с категорией
         /// </summary>
         [Required]
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         //Процедуры
         private ICollection<Procedure> procedures;

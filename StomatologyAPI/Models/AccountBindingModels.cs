@@ -32,6 +32,9 @@ namespace StomatologyAPI.Models
         public string ConfirmPassword { get; set; }
     }
 
+    /// <summary>
+    /// Модель регистрации
+    /// </summary>
     public class RegisterBindingModel
     {
         [Required]
@@ -48,6 +51,37 @@ namespace StomatologyAPI.Models
         [Display(Name = "Подтверждение пароля")]
         [Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [MaxLength(64)]
+        [Display(Name = "Имя")]
+        public string Name { get; set; }
+        [Required]
+        [MaxLength(64)]
+        [Display(Name = "Фамилия")]
+        public string Surname { get; set; }
+
+        [MaxLength(64)]
+        [Display(Name = "Отчество")]
+        public string Middlename { get; set; }
+    }
+
+    /// <summary>
+    /// Регистрация пациента
+    /// </summary>
+    public class PatientRegisterBindingModel : RegisterBindingModel
+    {
+        [Display(Name = "Возраст")]
+        [Required]
+        [Range(0, int.MaxValue)]
+        public int Age { get; set; }
+
+        [Display(Name = "Номер полиса медицинского страхования")]
+        public int? MedicalCardNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Пол")]
+        public Boolean IsMen { get; set; }
     }
 
     public class RegisterExternalBindingModel

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StomatologyAPI.Models.Abstract;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace StomatologyAPI.Models
 {
-    public class Doctor:ApplicationUser
+    public class Doctor:AbstractModel
     {
         /// <summary>
         /// Описывает врача:
@@ -25,10 +26,12 @@ namespace StomatologyAPI.Models
         public string Text { get; set; }
 
 
-        /////////////////////////////////// КОНСТРУКТОРЫ //////////////////////////////////////////
-        public Doctor() { }
-        public Doctor(string surname, string name, string middlename = null) : base(surname, name, middlename)
-        {
-        }
+        /// <summary>
+        /// Связь с пользователями
+        /// </summary>
+        [Required]
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
+
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using StomatologyAPI.Models;
 using StomatologyAPI.Providers;
 using StomatologyAPI.Results;
+using StomatologyAPI.Abstract;
 
 namespace StomatologyAPI.Controllers
 {
@@ -26,15 +27,24 @@ namespace StomatologyAPI.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
 
+        private IRepository<Patient> patient_repository;
+        private IRepository<Doctor> doctor_repository;
+        private IRepository<DentalTechnican> technican_repository;
+
         public AccountController()
         {
         }
 
         public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
+            IUnitOfWork uof)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+
+            patient_repository = uof.GetRepository<Patient>();
+            doctor_repository = uof.GetRepository<Doctor>();
+            technican_repository = uof.GetRepository<DentalTechnican>();
         }
 
         public ApplicationUserManager UserManager
@@ -318,14 +328,30 @@ namespace StomatologyAPI.Controllers
             return logins;
         }
 
-        // POST api/Account/Register
-        [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Структура с информацией результатом регистрации
+        /// </summary>
+        struct RegisterResult
+        {
+            public IHttpActionResult Result;
+            public bool IsSuccess;
+            public ApplicationUser User;
+
+            public RegisterResult(IHttpActionResult result, bool success, ApplicationUser user)
+            {
+                Result = result;
+                IsSuccess = success;
+                User = user;
+            }
+        }
+
+        private async Task<RegisterResult> Register(RegisterBindingModel model, string role)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return new RegisterResult(BadRequest(ModelState), false, null);
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
@@ -334,11 +360,71 @@ namespace StomatologyAPI.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                return new RegisterResult(GetErrorResult(result), false, null);
             }
 
-            return Ok();
+            //Добавляем роль
+            UserManager.AddToRole(user.Id, role);
+
+            return new RegisterResult(Ok(), true, user);
         }
+
+        //Регистрация пациента
+        [AllowAnonymous]
+        [Route("RegisterPatient")]
+        public async Task<IHttpActionResult> RegisterPatient(PatientRegisterBindingModel model)
+        {
+            RegisterResult result = await Register(model, "patient");
+
+            if (result.IsSuccess)
+            {
+                Patient patient = new Patient();
+                patient.IsMen = model.IsMen;
+                patient.Age = model.Age;
+                patient.MedicalCardNumber = model.MedicalCardNumber;
+                patient.User = result.User;
+
+                patient_repository.CreateOrUpdate(patient);
+            }
+
+            return result.Result;
+        }
+
+        //Регистрация врача
+        [Authorize(Roles = "admin")]
+        [Route("RegisterDoctor")]
+        public async Task<IHttpActionResult> RegisterDoctor(PatientRegisterBindingModel model)
+        {
+            RegisterResult result = await Register(model, "patient");
+
+            if (result.IsSuccess)
+            {
+                Doctor doctor = new Doctor();
+                doctor.User = result.User;
+                doctor_repository.CreateOrUpdate(doctor);
+            }
+
+            return result.Result;
+        }
+
+        //Регистрация зубного техника
+        [Authorize(Roles = "admin")]
+        [Route("RegisterDentalTechnican")]
+        public async Task<IHttpActionResult> RegisterDentalTechnican(PatientRegisterBindingModel model)
+        {
+            RegisterResult result = await Register(model, "patient");
+
+            if (result.IsSuccess)
+            {
+                DentalTechnican technican = new DentalTechnican();
+                technican.User = result.User;
+                technican_repository.CreateOrUpdate(technican);
+            }
+
+            return result.Result;
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
 
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]

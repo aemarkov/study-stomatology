@@ -31,17 +31,18 @@ namespace StomatologyAPI.Models
 
         //Пациент
         [Required]
-        public int PatientID { get; set; }
-        //public Patient Patient { get; set; }
+        public int PatientId { get; set; }
+        public virtual Patient Patient { get; set; }
 
 
         //Зубной техник
-        public int? DentalTechnicanID { get; set; }
+        public int? DentalTechnicanId { get; set; }
+        public virtual DentalTechnican DentalTechnican { get; set; }
 
 
         //Информация о клинике
         [Required]
-        public int ClinicInfoID { get; set; }
+        public int ClinicInfoId { get; set; }
         public ClinicInfo ClinicInfo { get; set; }
 
         /// <summary>

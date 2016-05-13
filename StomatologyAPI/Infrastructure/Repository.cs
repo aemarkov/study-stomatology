@@ -64,7 +64,7 @@ namespace StomatologyAPI.Infrastructure
                 context.SaveChanges();
             }
             else
-                throw new ArgumentNullException("Entity doesn't exist in repository");
+                throw new ArgumentException("Entity doesn't exist in repository");
         }
 
         /// <summary>

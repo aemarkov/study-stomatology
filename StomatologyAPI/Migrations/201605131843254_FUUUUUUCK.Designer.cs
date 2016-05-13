@@ -7,13 +7,13 @@ namespace StomatologyAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Ini : IMigrationMetadata
+    public sealed partial class FUUUUUUCK : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Ini));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FUUUUUUCK));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605122150323_Ini"; }
+            get { return "201605131843254_FUUUUUUCK"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using StomatologyAPI.Models.Abstract;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,18 +11,18 @@ namespace StomatologyAPI.Models
     /// Зубной техник
 	/// Он выполняет наряд-заказы
     /// </summary>
-    public class DentalTechnican:ApplicationUser
+    public class DentalTechnican:AbstractModel
     {
         /// <summary>
 		/// Наряд-зкаказы
 		/// </summary>
 		public ICollection<Order> Orders { get; set; }
 
-
-        /////////////////////////////////// КОНСТРУКТОРЫ //////////////////////////////////////////
-        public DentalTechnican() { }
-        public DentalTechnican(string surname, string name, string middlename = null) : base(surname, name, middlename)
-        {
-        }
+        /// <summary>
+        /// Связь с пользователями
+        /// </summary>
+        [Required]
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

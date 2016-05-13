@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -24,10 +25,12 @@ namespace StomatologyAPI.Models
 
         //Пациент
         [Required]
-        public int PatientID { get; set; }
+        public int PatientId { get; set; }
+        public virtual Patient Patient { get; set; }
 
         //Врач
-        public int? DoctorID { get; set; }
+        public int? DoctorId { get; set; }
+        public virtual Doctor Doctor { get; set; }
         
         /// <summary>
         /// Выполненные процедуры

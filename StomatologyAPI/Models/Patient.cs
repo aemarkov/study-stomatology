@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StomatologyAPI.Models.Abstract;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,10 @@ using System.Web;
 
 namespace StomatologyAPI.Models
 {
-    public class Patient:ApplicationUser
+    /// <summary>
+    /// Пациент
+    /// </summary>
+    public class Patient:AbstractModel
     {
         /// <summary>
 		/// Номер полиса
@@ -24,9 +28,15 @@ namespace StomatologyAPI.Models
         /// Пол. Я до ужаса нетолерантный.
         /// </summary>
         [Required]
-        [Display(Name = "Пол")]
         public bool IsMen { get; set; }
 
+        /// <summary>
+        /// Связь с пользователями
+        /// </summary>
+        [Required]
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
+        
 
         /// <summary>
         /// Посещения
@@ -48,12 +58,6 @@ namespace StomatologyAPI.Models
         }
         private ICollection<Order> orders;
 
-
-        /////////////////////////////////// КОНСТРУКТОРЫ //////////////////////////////////////////
-        public Patient() { }
-        public Patient(string surname, string name, string middlename = null) : base(surname, name, middlename)
-        {
-        }
     }
 
    

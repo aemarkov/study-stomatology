@@ -30,7 +30,7 @@ namespace StomatologyAPI.Models
         /// Связь с подкатегорией
         /// </summary>
         [Required]
-        public int SubcategoryID { get; set; }
+        public int SubcategoryId { get; set; }
 
         /// <summary>
 		/// Стоимость процедуры

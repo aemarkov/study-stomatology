@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using StomatologyAPI.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,11 +16,17 @@ namespace StomatologyAPI.Models
         public ApplicationDbContext()
             : base("SQLExpress")
         {
+            Database.SetInitializer(new DbInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Patient>()
+                .HasMany(x => x.Visits);
+
+            
         }
 
         public static ApplicationDbContext Create()
@@ -36,5 +43,9 @@ namespace StomatologyAPI.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<ToothWork> ToothWorkds { get; set; }
         public DbSet<ClinicInfo> ClinincInfo { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<DentalTechnican> DentalTechnicans { get; set; }
     }
 }
