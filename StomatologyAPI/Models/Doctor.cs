@@ -33,5 +33,11 @@ namespace StomatologyAPI.Models
         public int ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
+        /// <summary>
+        /// Информация о человеке
+        /// </summary>
+        public int PersonInfoId { get; set; }
+        public virtual PersonInfo PersonInfo { get; set; }
+
     }
 }

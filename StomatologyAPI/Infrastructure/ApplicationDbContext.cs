@@ -28,14 +28,20 @@ namespace StomatologyAPI.Models
 
             builder.Entity<Patient>()
                 .HasOptional(x => x.ApplicationUser);
+            builder.Entity<Patient>()
+                .HasRequired(x => x.PersonInfo);
 
             builder.Entity<Doctor>()
                 .HasRequired(x => x.ApplicationUser);
+            builder.Entity<Doctor>()
+                .HasRequired(x => x.PersonInfo);
 
             builder.Entity<DentalTechnican>()
                 .HasRequired(x => x.ApplicationUser);
+            builder.Entity<DentalTechnican>()
+                .HasRequired(x => x.PersonInfo);
 
-            
+
         }
 
         public static ApplicationDbContext Create()

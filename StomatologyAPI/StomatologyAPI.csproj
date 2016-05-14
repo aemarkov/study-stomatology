@@ -258,11 +258,16 @@
     <Compile Include="Migrations\201605141001057_fix_users_again.Designer.cs">
       <DependentUpon>201605141001057_fix_users_again.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605141033554_create_person_info.cs" />
+    <Compile Include="Migrations\201605141033554_create_person_info.Designer.cs">
+      <DependentUpon>201605141033554_create_person_info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
     <Compile Include="Models\Abstract\IModel.cs" />
-    <Compile Include="Models\AccountBindingModels.cs" />
+    <Compile Include="Models\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BindingModels\PatientBindingModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ClinicInfo.cs" />
     <Compile Include="Models\DentalTechnican.cs" />
@@ -271,6 +276,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientVisit.cs" />
+    <Compile Include="Models\PersonInfo.cs" />
     <Compile Include="Models\Procedure.cs" />
     <Compile Include="Models\Subcategory.cs" />
     <Compile Include="Models\TechnicanProcedure.cs" />
@@ -358,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605141001057_fix_users_again.resx">
       <DependentUpon>201605141001057_fix_users_again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605141033554_create_person_info.resx">
+      <DependentUpon>201605141033554_create_person_info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

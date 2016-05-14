@@ -30,12 +30,14 @@ namespace StomatologyAPI.Controllers
         private IRepository<Patient> patient_repository;
         private IRepository<Doctor> doctor_repository;
         private IRepository<DentalTechnican> technican_repository;
+        private IRepository<PersonInfo> person_info_repository;
 
         public AccountController(IUnitOfWork uof)
         {
             doctor_repository = uof.GetRepository<Doctor>();
             patient_repository = uof.GetRepository<Patient>();
             technican_repository = uof.GetRepository<DentalTechnican>();
+            person_info_repository = uof.GetRepository<PersonInfo>();
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -346,6 +348,12 @@ namespace StomatologyAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Регистрирует пользователя
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="role"></param>
+        /// <returns></returns>
         private async Task<RegisterResult> Register(RegisterBindingModel model, string role)
         {
             if (!ModelState.IsValid)
@@ -353,7 +361,7 @@ namespace StomatologyAPI.Controllers
                 return new RegisterResult(BadRequest(ModelState), false, null);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Name=model.Name, Surname = model.Surname, Middlename = model.Middlename };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email};
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -366,6 +374,13 @@ namespace StomatologyAPI.Controllers
             UserManager.AddToRole(user.Id, role);
 
             return new RegisterResult(Ok(), true, user);
+        }
+
+        public PersonInfo create_person_info(RegisterBindingModel model)
+        {
+            PersonInfo pi = new PersonInfo(model.Surname, model.Name, model.Middlename);
+            //person_info_repository.Create(pi);
+            return pi;
         }
 
         //Регистрация пациента
@@ -382,14 +397,8 @@ namespace StomatologyAPI.Controllers
                 patient.Age = model.Age;
                 patient.MedicalCardNumber = model.MedicalCardNumber;
                 patient.ApplicationUserId = result.User.Id;
-
-                try
-                {
-                    patient_repository.Create(patient);
-                }catch(Exception exp)
-                {
-
-                }
+                patient.PersonInfo = create_person_info(model);
+                patient_repository.Create(patient);
             }
 
             return result.Result;
@@ -398,14 +407,15 @@ namespace StomatologyAPI.Controllers
         //Регистрация врача
         [Authorize(Roles = "admin")]
         [Route("RegisterDoctor")]
-        public async Task<IHttpActionResult> RegisterDoctor(PatientRegisterBindingModel model)
+        public async Task<IHttpActionResult> RegisterDoctor(DoctorRegisterBindingModel model)
         {
             RegisterResult result = await Register(model, "doctor");
 
             if (result.IsSuccess)
             {
-                Doctor doctor = new Doctor();
-                doctor.ApplicationUser = result.User;
+                Doctor doctor = new Doctor() { Image = model.Image, Text = model.Text };
+                doctor.ApplicationUserId = result.User.Id;
+                doctor.PersonInfo = create_person_info(model);
                 doctor_repository.Create(doctor);
             }
 
@@ -415,14 +425,15 @@ namespace StomatologyAPI.Controllers
         //Регистрация зубного техника
         [Authorize(Roles = "admin")]
         [Route("RegisterDentalTechnican")]
-        public async Task<IHttpActionResult> RegisterDentalTechnican(PatientRegisterBindingModel model)
+        public async Task<IHttpActionResult> RegisterDentalTechnican(RegisterBindingModel model)
         {
             RegisterResult result = await Register(model, "dental_technican");
 
             if (result.IsSuccess)
             {
                 DentalTechnican technican = new DentalTechnican();
-                technican.ApplicationUser = result.User;
+                technican.ApplicationUserId = result.User.Id;
+                technican.PersonInfo = create_person_info(model);
                 technican_repository.Create(technican);
             }
 

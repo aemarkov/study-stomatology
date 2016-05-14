@@ -84,6 +84,19 @@ namespace StomatologyAPI.Models
         public Boolean IsMen { get; set; }
     }
 
+    /// <summary>
+    /// Регистрация врача
+    /// </summary>
+    public class DoctorRegisterBindingModel : RegisterBindingModel
+    {
+        [Display(Name = "Изображение")]
+        [MaxLength(255)]
+        public String Image { get; set; }
+
+        [Display(Name = "Описание")]
+        public String Text { get; set; }
+    }
+
     public class RegisterExternalBindingModel
     {
         [Required]

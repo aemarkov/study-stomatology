@@ -33,7 +33,7 @@ namespace StomatologyAPI.Infrastructure
             roleManager.Create(dental_technican_role);
 
             // создаем пользователей
-            var admin = new ApplicationUser { Email = "admin@somemail.ru", UserName = "admin", Name="Админ",Surname="Админов"};
+            var admin = new ApplicationUser { Email = "admin@somemail.ru", UserName = "admin"};
             string password = "adminadmin";
             var result = userManager.Create(admin, password);
 
