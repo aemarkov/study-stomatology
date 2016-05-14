@@ -44,7 +44,6 @@ namespace StomatologyAPI.Controllers.Abstract
 
 
         //Изменить
-        [Authorize(Roles = "admin")]
         virtual public HttpResponseMessage Post([FromBody]M value)
         {
             try
@@ -63,7 +62,6 @@ namespace StomatologyAPI.Controllers.Abstract
         }
 
         //Создать
-        [Authorize(Roles = "admin")]
         virtual public HttpResponseMessage Put([FromBody]M value)
         {
             try
@@ -83,7 +81,6 @@ namespace StomatologyAPI.Controllers.Abstract
 
 
         //Удалить
-        [Authorize(Roles ="admin")]
         virtual public HttpResponseMessage Delete(int id)
         {
             try
@@ -93,7 +90,7 @@ namespace StomatologyAPI.Controllers.Abstract
             }
             catch (EntityNotFoundException exp)
             {
-                return ResponseCreator.GenerateResponse(HttpStatusCode.NoContent, exp.Message);//new HttpResponseMessage(HttpStatusCode.NotFound);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp.Message);//new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             catch (Exception exp)
             {

@@ -74,5 +74,11 @@ namespace StomatologyAPI.Controllers
         {
             return new HttpResponseMessage(HttpStatusCode.BadGateway);
         }
+
+        [Authorize(Roles ="admin")]
+        public override HttpResponseMessage Delete(int id)
+        {
+            return base.Delete(id);
+        }
     }
 }

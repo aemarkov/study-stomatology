@@ -22,5 +22,23 @@ namespace StomatologyAPI.Controllers
             return m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == id);
         }
 
+        [Authorize(Roles = "admin")]
+        public override HttpResponseMessage Put([FromBody] Subcategory value)
+        {
+            return base.Put(value);
+        }
+
+        [Authorize(Roles = "admin")]
+        public override HttpResponseMessage Post([FromBody] Subcategory value)
+        {
+            return base.Post(value);
+        }
+
+        [Authorize(Roles ="admin")]
+        public override HttpResponseMessage Delete(int id)
+        {
+            return base.Delete(id);
+        }
+
     }
 }

@@ -90,18 +90,11 @@ namespace StomatologyAPI.Controllers
         }
 
         [Authorize(Roles ="admin,doctor")]
-        [Route("GetVisits/{id}")]
-        public ICollection<PatientVisit> GetVisits(int id)
+        [Route("GetVisits")]
+        public ICollection<PatientVisit> GetVisits(int patientId)
         {
-            return m_repository.GetById(id).Visits;
+            return m_repository.GetById(patientId).Visits;
         }
-
-
-
-
-
-
-
 
 
 

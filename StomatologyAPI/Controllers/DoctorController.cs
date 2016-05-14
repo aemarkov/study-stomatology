@@ -60,6 +60,11 @@ namespace StomatologyAPI.Controllers
         }
 
 
+        [Authorize(Roles ="admin")]
+        public override HttpResponseMessage Delete(int id)
+        {
+            return base.Delete(id);
+        }
 
         //Это говнокостыль. Эти методы определны в базовом, но тут нам не нужны
         [Route("undefined_method_1")]

@@ -16,5 +16,25 @@ namespace StomatologyAPI.Controllers
         {
         }
 
+
+        [Authorize(Roles = "admin")]
+        public override HttpResponseMessage Put([FromBody] Procedure value)
+        {
+            return base.Put(value);
+        }
+
+        [Authorize(Roles = "admin")]
+        public override HttpResponseMessage Post([FromBody] Procedure value)
+        {
+            return base.Post(value);
+        }
+
+        [Authorize(Roles = "admin")]
+        public override HttpResponseMessage Delete(int id)
+        {
+            return base.Delete(id);
+        }
+
+
     }
 }
