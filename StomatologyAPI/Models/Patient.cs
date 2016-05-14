@@ -33,9 +33,8 @@ namespace StomatologyAPI.Models
         /// <summary>
         /// Связь с пользователями
         /// </summary>
-        [Required]
-        public int ApplicationUserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public int? ApplicationUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
         
 
         /// <summary>

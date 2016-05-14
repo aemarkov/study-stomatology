@@ -31,20 +31,19 @@ namespace StomatologyAPI.Controllers
         private IRepository<Doctor> doctor_repository;
         private IRepository<DentalTechnican> technican_repository;
 
-        public AccountController()
+        public AccountController(IUnitOfWork uof)
         {
+            doctor_repository = uof.GetRepository<Doctor>();
+            patient_repository = uof.GetRepository<Patient>();
+            technican_repository = uof.GetRepository<DentalTechnican>();
         }
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
-            IUnitOfWork uof)
+            IUnitOfWork uof):this(uof)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-
-            patient_repository = uof.GetRepository<Patient>();
-            doctor_repository = uof.GetRepository<Doctor>();
-            technican_repository = uof.GetRepository<DentalTechnican>();
         }
 
         public ApplicationUserManager UserManager
@@ -354,7 +353,7 @@ namespace StomatologyAPI.Controllers
                 return new RegisterResult(BadRequest(ModelState), false, null);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Name=model.Name, Surname = model.Surname, Middlename = model.Middlename };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -376,15 +375,21 @@ namespace StomatologyAPI.Controllers
         {
             RegisterResult result = await Register(model, "patient");
 
-            if (result.IsSuccess)
+             if (result.IsSuccess)
             {
                 Patient patient = new Patient();
                 patient.IsMen = model.IsMen;
                 patient.Age = model.Age;
                 patient.MedicalCardNumber = model.MedicalCardNumber;
-                patient.User = result.User;
+                patient.ApplicationUserId = result.User.Id;
 
-                patient_repository.CreateOrUpdate(patient);
+                try
+                {
+                    patient_repository.Create(patient);
+                }catch(Exception exp)
+                {
+
+                }
             }
 
             return result.Result;
@@ -395,13 +400,13 @@ namespace StomatologyAPI.Controllers
         [Route("RegisterDoctor")]
         public async Task<IHttpActionResult> RegisterDoctor(PatientRegisterBindingModel model)
         {
-            RegisterResult result = await Register(model, "patient");
+            RegisterResult result = await Register(model, "doctor");
 
             if (result.IsSuccess)
             {
                 Doctor doctor = new Doctor();
-                doctor.User = result.User;
-                doctor_repository.CreateOrUpdate(doctor);
+                doctor.ApplicationUser = result.User;
+                doctor_repository.Create(doctor);
             }
 
             return result.Result;
@@ -412,13 +417,13 @@ namespace StomatologyAPI.Controllers
         [Route("RegisterDentalTechnican")]
         public async Task<IHttpActionResult> RegisterDentalTechnican(PatientRegisterBindingModel model)
         {
-            RegisterResult result = await Register(model, "patient");
+            RegisterResult result = await Register(model, "dental_technican");
 
             if (result.IsSuccess)
             {
                 DentalTechnican technican = new DentalTechnican();
-                technican.User = result.User;
-                technican_repository.CreateOrUpdate(technican);
+                technican.ApplicationUser = result.User;
+                technican_repository.Create(technican);
             }
 
             return result.Result;

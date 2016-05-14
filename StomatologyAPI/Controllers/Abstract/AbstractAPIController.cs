@@ -1,4 +1,5 @@
 ﻿using StomatologyAPI.Abstract;
+using StomatologyAPI.Infrastructure;
 using StomatologyAPI.Models.Abstract;
 using System;
 using System.Collections.Generic;
@@ -24,34 +25,55 @@ namespace StomatologyAPI.Controllers.Abstract
         }
 
         //Вернуть все
-        public virtual IEnumerable<M> Get() =>  m_repository.Entities.ToList(); 
-        
+        public virtual IEnumerable<M> Get() =>  m_repository.Entities.ToList();
+
 
         //Вернуть один
-        virtual public M Get(int id) => m_repository.GetById(id);
+        virtual public M Get(int id)
+        {
+            try
+            {
+                return m_repository.GetById(id);
+            }
+            catch (EntityNotFoundException)
+            {
+                return null;
+            }
+
+        }
 
 
         //Изменить
+        [Authorize(Roles = "admin")]
         virtual public HttpResponseMessage Post([FromBody]M value)
         {
             try
             {
-                m_repository.CreateOrUpdate(value);
+                m_repository.Update(value);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            catch (Exception exp)
+            catch (EntityNotFoundException)
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+            catch(Exception exp)
             {
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
 
         //Создать
+        [Authorize(Roles = "admin")]
         virtual public HttpResponseMessage Put([FromBody]M value)
         {
             try
             {
-                m_repository.CreateOrUpdate(value);
+                m_repository.Create(value);
                 return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (EntityAlreadyExistsException)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception exp)
             {
@@ -61,6 +83,7 @@ namespace StomatologyAPI.Controllers.Abstract
 
 
         //Удалить
+        [Authorize(Roles ="admin")]
         virtual public HttpResponseMessage Delete(int id)
         {
             try
@@ -68,7 +91,7 @@ namespace StomatologyAPI.Controllers.Abstract
                 m_repository.Delete(id);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            catch (ArgumentException exp)
+            catch (EntityNotFoundException exp)
             {
                 return new HttpResponseMessage(HttpStatusCode.NotFound);
             }

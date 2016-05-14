@@ -23,6 +23,6 @@ namespace StomatologyAPI.Models
         /// </summary>
         [Required]
         public int ApplicationUserId { get; set; }
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -32,22 +32,29 @@ namespace StomatologyAPI.Infrastructure
         /// </summary>
         public IQueryable<M> Entities { get { return context.Set<M>(); } }
 
-        /// <summary>
-        /// Создает новую сущность, либо сохраняет, если сущность
-        /// отсуствует
-        /// </summary>
-        /// <param name="entity"></param>
-        public void CreateOrUpdate(M entity)
+        //Обновляет
+        public void Update(M entity)
         {
-            if (!context.Set<M>().Any(x => x.Id == entity.Id))
-                //Создаем
-                context.Entry(entity).State = EntityState.Added;
-            
-            else
-                //Сохраняем
+            if (context.Set<M>().Any(x => x.Id == entity.Id))
+            {
                 context.Entry(entity).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+            else
+                throw new EntityNotFoundException();
+        }
 
-            context.SaveChanges();
+        //Создат
+        public void Create(M entity)
+        {
+
+            if (!context.Set<M>().Any(x => x.Id == entity.Id))
+            {
+                context.Entry(entity).State = EntityState.Added;
+                context.SaveChanges();
+            }
+            else
+                throw new EntityAlreadyExistsException();
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace StomatologyAPI.Infrastructure
                 context.SaveChanges();
             }
             else
-                throw new ArgumentException("Entity doesn't exist in repository");
+                throw new EntityNotFoundException();
         }
 
         /// <summary>
@@ -82,7 +89,11 @@ namespace StomatologyAPI.Infrastructure
         /// <param name="id"></param>
         public M GetById(int id)
         {
-            return context.Set<M>().First(x => x.Id==id);
+            M entity =  context.Set<M>().FirstOrDefault(x => x.Id==id);
+            if (entity == null)
+                throw new EntityNotFoundException();
+            else
+                return entity;
         }
     }
 }

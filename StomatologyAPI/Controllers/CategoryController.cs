@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using StomatologyAPI.Abstract;
+using System.Data.Entity;
 
 namespace StomatologyAPI.Controllers
 {
@@ -23,16 +24,9 @@ namespace StomatologyAPI.Controllers
         {
         }
 
-        [Authorize(Roles = "Admin")]
-        public override HttpResponseMessage Put([FromBody] Category value)
+        public override Category Get(int id)
         {
-            return base.Put(value);
-        }
-
-        [Authorize(Roles ="Admin")]
-        public override HttpResponseMessage Delete(int id)
-        {
-            return base.Delete(id);
+            return m_repository.Entities.Include("Subcategories.Procedures").FirstOrDefault(x => x.Id == id);
         }
     }
 }

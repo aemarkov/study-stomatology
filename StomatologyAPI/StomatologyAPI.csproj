@@ -228,13 +228,18 @@
     <Compile Include="Controllers\Abstract\AbstractAPIController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\ProcedureController.cs" />
+    <Compile Include="Controllers\SubcategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TechnicanProcedureController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\DbInitializer.cs" />
+    <Compile Include="Infrastructure\Exceptions.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Migrations\201605131843254_FUUUUUUCK.cs" />
@@ -244,6 +249,14 @@
     <Compile Include="Migrations\201605131900093_FUUUUUUCK_2.cs" />
     <Compile Include="Migrations\201605131900093_FUUUUUUCK_2.Designer.cs">
       <DependentUpon>201605131900093_FUUUUUUCK_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605140943012_fix_user_to_doctor_relation.cs" />
+    <Compile Include="Migrations\201605140943012_fix_user_to_doctor_relation.Designer.cs">
+      <DependentUpon>201605140943012_fix_user_to_doctor_relation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605141001057_fix_users_again.cs" />
+    <Compile Include="Migrations\201605141001057_fix_users_again.Designer.cs">
+      <DependentUpon>201605141001057_fix_users_again.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
@@ -339,6 +352,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605131900093_FUUUUUUCK_2.resx">
       <DependentUpon>201605131900093_FUUUUUUCK_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605140943012_fix_user_to_doctor_relation.resx">
+      <DependentUpon>201605140943012_fix_user_to_doctor_relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605141001057_fix_users_again.resx">
+      <DependentUpon>201605141001057_fix_users_again.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
