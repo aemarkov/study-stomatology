@@ -52,13 +52,13 @@ namespace StomatologyAPI.Controllers.Abstract
                 m_repository.Update(value);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            catch (EntityNotFoundException)
+            catch (EntityNotFoundException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp); //new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             catch(Exception exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.InternalServerError, exp); //new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -71,13 +71,13 @@ namespace StomatologyAPI.Controllers.Abstract
                 m_repository.Create(value);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            catch (EntityAlreadyExistsException)
+            catch (EntityAlreadyExistsException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.BadRequest, exp);// new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.InternalServerError, exp); //new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -93,11 +93,11 @@ namespace StomatologyAPI.Controllers.Abstract
             }
             catch (EntityNotFoundException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.NoContent, exp.Message);//new HttpResponseMessage(HttpStatusCode.NotFound);
             }
             catch (Exception exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.InternalServerError, exp.Message); //new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
     }

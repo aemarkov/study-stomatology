@@ -228,6 +228,8 @@
     <Compile Include="Controllers\Abstract\AbstractAPIController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\DentalTechnicanController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\ProcedureController.cs" />
     <Compile Include="Controllers\SubcategoryController.cs" />
@@ -240,6 +242,7 @@
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\DbInitializer.cs" />
     <Compile Include="Infrastructure\Exceptions.cs" />
+    <Compile Include="Infrastructure\ResponseCreator.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Migrations\201605131843254_FUUUUUUCK.cs" />
@@ -267,7 +270,7 @@
     <Compile Include="Models\Abstract\IModel.cs" />
     <Compile Include="Models\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BindingModels\PatientBindingModel.cs" />
+    <Compile Include="Models\BindingModels\BindingModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ClinicInfo.cs" />
     <Compile Include="Models\DentalTechnican.cs" />

@@ -19,33 +19,19 @@ namespace StomatologyAPI.Controllers
         {
         }
 
-        [Authorize(Roles = "admin,doctor")]
+        [Authorize(Roles = "admin, doctor")]
         public override IEnumerable<Patient> Get()
         {
             return base.Get();
         }
 
-        [Authorize(Roles = "admin,doctor")]
+        [Authorize(Roles = "admin, doctor")]
         public override Patient Get(int id)
         {
             return base.Get(id);
         }
 
-
-        //Это говнокостыль. Эти методы определны в базовом, но тут нам не нужны
-        [Route("undefined_method_1")]
-        public override HttpResponseMessage Put([FromBody] Patient value)
-        {
-            return new HttpResponseMessage(HttpStatusCode.BadGateway);
-        }
-
-        [Route("undefined_method_1")]
-        public override HttpResponseMessage Post([FromBody] Patient value)
-        {
-            return new HttpResponseMessage(HttpStatusCode.BadGateway);
-        }
-
-        [Authorize(Roles = "admin,doctor")]
+        [Authorize(Roles = "admin, doctor")]
         public HttpResponseMessage Put([FromBody] PatientBindingModel value)
         {
             try
@@ -57,13 +43,13 @@ namespace StomatologyAPI.Controllers
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
-            catch (EntityAlreadyExistsException)
+            catch (EntityAlreadyExistsException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.BadRequest, exp); //new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.InternalServerError, exp); //new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -83,15 +69,15 @@ namespace StomatologyAPI.Controllers
             }
             catch (EntityAlreadyExistsException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.BadRequest, exp); //new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch(EntityNotFoundException exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp); //new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             catch (Exception exp)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                return ResponseCreator.GenerateResponse(HttpStatusCode.InternalServerError, exp);//new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
 
@@ -108,6 +94,29 @@ namespace StomatologyAPI.Controllers
         public ICollection<PatientVisit> GetVisits(int id)
         {
             return m_repository.GetById(id).Visits;
+        }
+
+
+
+
+
+
+
+
+
+
+
+        //Это говнокостыль. Эти методы определны в базовом, но тут нам не нужны
+        [Route("undefined_method_1")]
+        public override HttpResponseMessage Put([FromBody] Patient value)
+        {
+            return new HttpResponseMessage(HttpStatusCode.BadGateway);
+        }
+
+        [Route("undefined_method_1")]
+        public override HttpResponseMessage Post([FromBody] Patient value)
+        {
+            return new HttpResponseMessage(HttpStatusCode.BadGateway);
         }
     }
 }
