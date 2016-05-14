@@ -26,6 +26,10 @@ namespace StomatologyAPI.Models
             builder.Entity<Patient>()
                 .HasMany(x => x.Visits);
 
+            builder.Entity<PatientVisit>()
+                .HasMany(x => x.Procedures)
+                .WithMany();
+
             builder.Entity<Patient>()
                 .HasOptional(x => x.ApplicationUser);
             builder.Entity<Patient>()

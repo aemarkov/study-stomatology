@@ -265,6 +265,18 @@
     <Compile Include="Migrations\201605141033554_create_person_info.Designer.cs">
       <DependentUpon>201605141033554_create_person_info.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605142100576_fix_visit_procedure_relation.cs" />
+    <Compile Include="Migrations\201605142100576_fix_visit_procedure_relation.Designer.cs">
+      <DependentUpon>201605142100576_fix_visit_procedure_relation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605142116531_fix_visit_procedure_relation_2.cs" />
+    <Compile Include="Migrations\201605142116531_fix_visit_procedure_relation_2.Designer.cs">
+      <DependentUpon>201605142116531_fix_visit_procedure_relation_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605142158145_fix_visit_procedure_relation_fuuck.cs" />
+    <Compile Include="Migrations\201605142158145_fix_visit_procedure_relation_fuuck.Designer.cs">
+      <DependentUpon>201605142158145_fix_visit_procedure_relation_fuuck.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
     <Compile Include="Models\Abstract\IModel.cs" />
@@ -280,6 +292,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\PatientVisit.cs" />
+    <Compile Include="Models\PatientVisitProcedure.cs" />
     <Compile Include="Models\PersonInfo.cs" />
     <Compile Include="Models\Procedure.cs" />
     <Compile Include="Models\Subcategory.cs" />
@@ -371,6 +384,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605141033554_create_person_info.resx">
       <DependentUpon>201605141033554_create_person_info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142100576_fix_visit_procedure_relation.resx">
+      <DependentUpon>201605142100576_fix_visit_procedure_relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142116531_fix_visit_procedure_relation_2.resx">
+      <DependentUpon>201605142116531_fix_visit_procedure_relation_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142158145_fix_visit_procedure_relation_fuuck.resx">
+      <DependentUpon>201605142158145_fix_visit_procedure_relation_fuuck.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
