@@ -1,6 +1,12 @@
 package com.example.stomatologyclient.api;
 
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -32,6 +38,37 @@ public class RetrofitFactory
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(CLIENT)
+                .build();
+
+        return retrofit;
+    }
+
+    /**
+     * Возвращает ретрофит c включенным в заголовки токеном
+     * @return
+     */
+    public static Retrofit GetRetrofit(final String token)
+    {
+        //Сраная магия, чтобы добавить токен
+        OkHttpClient client = new OkHttpClient();
+        client.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                final HttpUrl modified_url = chain.request()
+                        .url().newBuilder()
+                        .addQueryParameter("Authorization", "bearer "+token)
+                        .build();
+
+                final Request request = chain.request().newBuilder().url(modified_url).build();
+                final Response response = chain.proceed(request);
+                return  response;
+            }
+        });
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(base_url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
 
         return retrofit;

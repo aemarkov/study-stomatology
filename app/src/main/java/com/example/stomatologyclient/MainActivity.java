@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.stomatologyclient.auth.StomatologyAuthenticator;
 import com.example.stomatologyclient.fragments.AboutFramgnet;
 import com.example.stomatologyclient.fragments.CategoriesFragment;
 import com.example.stomatologyclient.fragments.DoctorsFragment;

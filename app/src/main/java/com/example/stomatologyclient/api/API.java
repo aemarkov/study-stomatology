@@ -5,6 +5,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -78,4 +80,19 @@ public interface API
     @DELETE("api/doctor/{id}")
     Call<Response> deleteDoctor(@Path("id") int id);
 
+    //Получение токена
+    @FormUrlEncoded
+    @POST("Token")
+    Call<Response> getToken(@Field("grant_type") String grant_type,@Field("username") String username, @Field("password") String password );
+
+
+    //Регистрация
+    @POST("api/Account/RegisterPatient")
+    Call<Response> registerPatient(Models.PatientRegistrationViewModel model);
+
+    @POST("api/Account/RegisterDoctor")
+    Call<Response> registerDoctor(Models.DoctorRegistrationViewModel model);
+
+    @POST("api/Account/RegisterDentalTechnican")
+    Call<Response> registerTechnican(Models.TechnicanRegistrationViewModel model);
 }

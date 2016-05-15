@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class Models
 {
-    DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+    static DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
 
     //Преобразует ФИО в строку, исключая отчество, если его нет
@@ -40,7 +40,7 @@ public class Models
     /**
      * Категория
      */
-    public class Category  extends NamedModel
+    public static class Category  extends NamedModel
     {
         public String Name;
         public String Description;
@@ -55,7 +55,7 @@ public class Models
     /**
      * Подкатегория
      */
-    public class Subcategory
+    public static class Subcategory
     {
         public String Name;
         public Integer CategoryId;
@@ -67,7 +67,7 @@ public class Models
     /**
      * Процедура
      */
-    public class Procedure
+    public static class Procedure
     {
         public String Name;
         public String Description;
@@ -80,7 +80,7 @@ public class Models
     /**
      * Инфа о человеке
      */
-    public class PersonInfo
+    public static class PersonInfo
     {
 
         public String Surname;
@@ -93,7 +93,7 @@ public class Models
     /**
      * Инфа о клинике
      */
-    public class ClinicInfo {
+    public static class ClinicInfo {
 
         public String Name;
         public String PhoneNumber;
@@ -106,7 +106,7 @@ public class Models
     /**
      * Зубной техник
      */
-    public class DentalTechnican extends NamedModel
+    public static class DentalTechnican extends NamedModel
     {
 
         public PersonInfo PersonInfo;
@@ -123,7 +123,7 @@ public class Models
     /**
      * Врач
      */
-    public class Doctor extends NamedModel
+    public static class Doctor extends NamedModel
     {
 
         public PersonInfo PersonInfo;
@@ -140,7 +140,7 @@ public class Models
     /**
      * Пациент
      */
-    public class Patient extends NamedModel {
+    public static class Patient extends NamedModel {
 
         public PersonInfo PersonInfo;
         public Integer MedicalCardNumber;
@@ -160,7 +160,7 @@ public class Models
     /**
      * Посешение
      */
-    public class Visit extends NamedModel {
+    public static class Visit extends NamedModel {
 
         public Doctor Doctor;
         public java.util.Date Date;
@@ -179,7 +179,7 @@ public class Models
     /**
      * Наряд-заказ
      */
-    public class Order  extends  NamedModel{
+    public static class Order  extends  NamedModel{
 
         public DentalTechnican DentalTechnican;
         public Doctor Doctor;
@@ -202,8 +202,10 @@ public class Models
 
     }
 
-
-    public class Tooth {
+    /**
+     * Элемент наряд заказа - работа по зубу
+     */
+    public static class Tooth {
 
         public Integer ToothNo;
         public Integer ProcedureId;
@@ -212,11 +214,56 @@ public class Models
         public Integer Id;
     }
 
-    public class TechnicanProcedure {
+    /**
+     * То, что может изготовить техние
+     */
+    public static class TechnicanProcedure {
 
         public String Name;
         public Integer Cost;
         public Integer Id;
+
+    }
+
+    // РЕГИСТРАЦИЯ
+
+    public static class PatientRegistrationViewModel {
+
+        public Integer Age;
+        public Integer MedicalCardNumber;
+        public Boolean IsMen;
+        public String Email;
+        public String Password;
+        public String ConfirmPassword;
+        public String Name;
+        public String Surname;
+        public String Middlename;
+
+    }
+
+    public static class DoctorRegistrationViewModel {
+
+        public Integer Age;
+        public String Email;
+        public String Password;
+        public String ConfirmPassword;
+        public String Name;
+        public String Surname;
+        public String Middlename;
+        public String Image;
+        public String Description;
+
+    }
+
+    public static class TechnicanRegistrationViewModel {
+
+        public Integer Age;
+        public String Email;
+        public String Password;
+        public String ConfirmPassword;
+        public String Name;
+        public String Surname;
+        public String Middlename;
 
     }
 }
