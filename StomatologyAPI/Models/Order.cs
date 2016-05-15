@@ -34,6 +34,10 @@ namespace StomatologyAPI.Models
         public int PatientId { get; set; }
         public virtual Patient Patient { get; set; }
 
+        //Пациент
+        public int? DoctorId { get; set; }
+        public virtual Doctor Doctor { get; set; }
+
 
         //Зубной техник
         public int? DentalTechnicanId { get; set; }

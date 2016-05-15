@@ -41,6 +41,7 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles = "admin, doctor")]
         public override HttpResponseMessage Put([FromBody] PatientVisit value)
         {
+            value.Date = DateTime.Now;
             return base.Put(value);
         }
 
