@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/About" />
+    <item
+        android:id="@+id/nav_categories"
+        android:icon="@drawable/ic_menu_send"
+        android:title="@string/Categories" />
+    <item
+        android:id="@+id/nav_signin"
+        android:icon="@drawable/ic_menu_send"
+        android:title="@string/SignIn" />
+
+
+</menu>

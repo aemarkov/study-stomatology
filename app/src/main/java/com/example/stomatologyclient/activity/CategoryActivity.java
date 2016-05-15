@@ -1,0 +1,80 @@
+package com.example.stomatologyclient.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
+
+import com.example.stomatologyclient.R;
+import com.example.stomatologyclient.adapters.NamedListAdapter;
+import com.example.stomatologyclient.api.API;
+import com.example.stomatologyclient.api.Models;
+import com.example.stomatologyclient.api.RetrofitFactory;
+import com.example.stomatologyclient.models.NamedModel;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+/**
+ * Просмотр категории
+ */
+public class CategoryActivity extends AbstractNavigationActivity {
+
+    private NamedListAdapter adapter;
+    private RecyclerView recyclerView;
+    private Retrofit retrofit;
+    private API api;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setup_actionbar();
+
+        recyclerView = (RecyclerView)findViewById(R.id.procedures_list);
+
+        //Настройка запроса
+        retrofit = RetrofitFactory.GetRetrofit();
+        api = retrofit.create(API.class);
+        final Call<Models.Category> categories = api.getCategory(id);
+        final Activity context = this;
+
+        //Запрос
+        categories.enqueue(new Callback<Models.Category>() {
+            @Override
+            public void onResponse(Call<Models.Category> call, Response<Models.Category> response) {
+
+                //Заполняем лист
+                Models.Category category = response.body();
+
+                context.setTitle(category.Name());
+
+                //adapter = new NamedListAdapter(context, items, true, false, false);
+                //adapter.setOnListInteractListenr((NamedListAdapter.OnListInteractListener) context);
+
+                //recyclerView.setAdapter(adapter);
+                //recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            }
+
+            @Override
+            public void onFailure(Call<Models.Category> call, Throwable t) {
+                Toast.makeText(context,"Не удалось загрузить категории",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+}
