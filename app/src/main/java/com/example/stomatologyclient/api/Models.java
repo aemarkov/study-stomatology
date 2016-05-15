@@ -9,12 +9,33 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Garrus on 15.05.2016.
+ * Список моделей для Retrofit.
+ * Наследование от NamedModel  нужно, чтобы
+ * пихать в адаптер.
+ *
+ * Это универсальный адаптер, так что немного говнокодно -
+ * NamedModel содержит поля на все случаи жизини:
+ *  - картинку
+ *  - название
+ *  - стоимость
  */
 public class Models
 {
     DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
+
+    //Преобразует ФИО в строку, исключая отчество, если его нет
+    private static String convertFIOToName(PersonInfo personInfo)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(personInfo.Surname).append(" ")
+                .append(personInfo.Name);
+
+        if(personInfo.Middlename!=null)
+            sb.append(" ").append(personInfo.Middlename);
+
+        return  sb.toString();
+    }
 
     /**
      * Категория
@@ -34,28 +55,26 @@ public class Models
     /**
      * Подкатегория
      */
-    public class Subcategory extends NamedModel
+    public class Subcategory
     {
         public String Name;
         public Integer CategoryId;
         public List<Procedure> Procedures = new ArrayList<Procedure>();
+        public int Id;
 
-        public  String Name(){return Name;}
     }
 
     /**
      * Процедура
      */
-    public class Procedure extends NamedModel
+    public class Procedure
     {
         public String Name;
         public String Description;
         public Integer SubcategoryId;
-
-        @Override
-        public String Name() {
-            return Name;
-        }
+        public Integer Id;
+        public String Image;
+        public Double Cost;
     }
 
     /**
@@ -97,7 +116,7 @@ public class Models
 
         @Override
         public String Name() {
-            return PersonInfo.Surname+" "+PersonInfo.Name+" "+PersonInfo.Middlename;
+            return Models.convertFIOToName(PersonInfo);
         }
     }
 
@@ -114,7 +133,7 @@ public class Models
 
         @Override
         public String Name() {
-            return PersonInfo.Surname+" "+PersonInfo.Name+" "+PersonInfo.Middlename;
+            return Models.convertFIOToName(PersonInfo);
         }
     }
 
@@ -134,7 +153,7 @@ public class Models
 
         @Override
         public String Name() {
-            return PersonInfo.Surname+" "+PersonInfo.Name+" "+PersonInfo.Middlename;
+            return Models.convertFIOToName(PersonInfo);
         }
     }
 

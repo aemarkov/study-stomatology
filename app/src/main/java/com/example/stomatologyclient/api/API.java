@@ -52,8 +52,8 @@ public interface API
     @GET("api/procedure")
     Call<List<Models.Procedure>> getProcedures();
 
-    @GET("api/procedire/{id}")
-    Call<Models.Procedure> getProcedures(@Path("id") int id);
+    @GET("api/Procedure/{id}")
+    Call<Models.Procedure> getProcedure(@Path("id") int id);
 
     @PUT("api/procedure")
     Call<Response> putProcedure(Models.Procedure procedure);
@@ -63,5 +63,19 @@ public interface API
 
     @DELETE("api/procedure/{id}")
     Call<Response> deleteProcedure(@Path("id") int id);
+
+
+    //Врачи
+    @GET("api/doctor")
+    Call<List<Models.Doctor>> getDoctors();
+
+    @GET("api/doctor/{id}")
+    Call<Models.Doctor> getDoctor(@Path("id") int id);
+
+    @POST("api/doctor")
+    Call<Response> postDoctor(Models.Doctor doctor);
+
+    @DELETE("api/doctor/{id}")
+    Call<Response> deleteDoctor(@Path("id") int id);
 
 }

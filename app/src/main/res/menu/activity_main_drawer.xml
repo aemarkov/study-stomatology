@@ -11,6 +11,10 @@
         android:icon="@drawable/ic_menu_send"
         android:title="@string/Categories" />
     <item
+        android:id="@+id/nav_doctors"
+        android:icon="@drawable/ic_menu_send"
+        android:title="@string/Doctors" />
+    <item
         android:id="@+id/nav_signin"
         android:icon="@drawable/ic_menu_send"
         android:title="@string/SignIn" />

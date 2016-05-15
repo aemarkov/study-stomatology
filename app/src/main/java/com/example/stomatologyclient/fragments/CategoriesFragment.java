@@ -1,16 +1,19 @@
-package com.example.stomatologyclient.activity;
+package com.example.stomatologyclient.fragments;
 
-import android.content.Context;
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.stomatologyclient.R;
+import com.example.stomatologyclient.activity.CategoryActivity;
 import com.example.stomatologyclient.adapters.NamedListAdapter;
+import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
@@ -24,31 +27,42 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Просмотр всх категорий
+ * Фрагмент страница категорий
  */
-public class CategoriesActivity extends AbstractNavigationActivity implements NamedListAdapter.OnListInteractListener
-{
+public class CategoriesFragment extends AbstractNavigationFragment implements OnListInteractListener {
+
 
     private NamedListAdapter adapter;
     private RecyclerView recyclerView;
-    private  Retrofit retrofit;
+    private Retrofit retrofit;
     private API api;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setup_actionbar();
 
-        recyclerView = (RecyclerView)findViewById(R.id.categories_list);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root =  inflater.inflate(R.layout.fragment_list, container, false);
+
+
+        recyclerView = (RecyclerView)root.findViewById(R.id.categories_list);
 
         //Настройка запроса
         retrofit = RetrofitFactory.GetRetrofit();
         api = retrofit.create(API.class);
         Call<List<Models.Category>> categories = api.getCategories();
-        final Context context = this;
+
+        //Настройка заголовка
+        final Activity context = getActivity();
+        context.setTitle(context.getString(R.string.Categories));
+
+        final OnListInteractListener listner = this;
 
         //Запрос
         categories.enqueue(new Callback<List<Models.Category>>() {
@@ -58,7 +72,7 @@ public class CategoriesActivity extends AbstractNavigationActivity implements Na
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
                 adapter = new NamedListAdapter(context, items, true, false, false);
-                adapter.setOnListInteractListenr((NamedListAdapter.OnListInteractListener) context);
+                adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -70,20 +84,26 @@ public class CategoriesActivity extends AbstractNavigationActivity implements Na
             }
         });
 
-
+        return  root;
     }
+
 
     //////////////////////// ОБРАБОТЧИКИИ СОБЫТИЙ //////////////////////////////////////////////////
 
     @Override
-    public void OnItemClick(NamedModel model) {
-        start_activity_and_send_id(CategoryActivity.class, model.Id);
+    public void OnItemClick(int id) {
+        Log.d("WTF","Category click");
+        start_activity_and_send_id(CategoryActivity.class, id);
+
     }
 
     @Override
-    public void OnRemoveClick(NamedModel model) {
-        //Удаление
+    public void OnRemoveClick(int id) {
+        Log.d("WTF","Category remove click");
+    }
 
-
+    @Override
+    public void OnEditClick(int id) {
+        Log.d("WTF","Category edit click");
     }
 }

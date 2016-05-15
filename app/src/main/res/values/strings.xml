@@ -9,6 +9,7 @@
 
     <string name="About">О клинике</string>
     <string name="Categories">Категории</string>
+    <string name="Doctors">Врачи</string>
     <string name="Profile">Личный кабинет</string>
     <string name="Orders">Заказы</string>
     <string name="SignIn">Вход</string>
@@ -16,9 +17,11 @@
 
 
     <!--  НАЗВАНИЕ ACTIVITY -->
-    <string name="title_activity_categories">Категории</string>
-    <string name="title_activity_procedures">Процедуры</string>
-    <string name="title_activity_about">О клинике</string>
-    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_procedures">Процедура</string>
+    <string name="title_activity_category">Категория</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_doctor">DoctorActivity</string>
 
 </resources>
