@@ -25,6 +25,7 @@ public class StomatologyAccountManager
     public final static int ROLE_ADMIN = 4;
 
     //Для Preferences
+    private final static String PREF="prefs";
     private final static String TOKEN = "token";
     private final static String ROLE = "role";
 
@@ -52,12 +53,9 @@ public class StomatologyAccountManager
      * @param token
      * @param role
      */
-    public static void saveToken(Activity mContext, String token, String role)
+    public static void saveToken(Context mContext, String token, String role)
     {
-        SharedPreferences token_pr =  mContext.getSharedPreferences(TOKEN,Context.MODE_PRIVATE);
-        SharedPreferences role_pr =  mContext.getSharedPreferences(ROLE,Context.MODE_PRIVATE);
-
-        SharedPreferences shpr =  mContext.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences shpr =  mContext.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =shpr.edit();
         editor.putString(TOKEN, token);
 
@@ -77,15 +75,25 @@ public class StomatologyAccountManager
      * Получаем токен, если нет - открывем активити для логининга
      * @return
      */
-    public static String getAuthToken(Activity mContext)
+    public static String getAuthToken(Context mContext)
     {
-        SharedPreferences shpr =  mContext.getPreferences(Context.MODE_PRIVATE);
-        String token = shpr.getString(TOKEN, null);
+        String token = getAuthTokenWithotLogin(mContext);
 
         if(token==null)
             showLoginActivity(mContext);
 
         return  token;
+    }
+
+    /**
+     * Получает токен и не открывает активити
+     * @param context
+     * @return
+     */
+    public static String getAuthTokenWithotLogin(Context context)
+    {
+        SharedPreferences shpr =  context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        return shpr.getString(TOKEN, null);
     }
 
     /**
@@ -102,10 +110,12 @@ public class StomatologyAccountManager
      * если не зарегестрирован
      * @return
      */
-    public static int GetAccountType(Activity mContext)
+    public static int GetRole(Context mContext)
     {
-        SharedPreferences shpr =  mContext.getPreferences(Context.MODE_PRIVATE);
-        return shpr.getInt(TOKEN,-1);
+        SharedPreferences shpr =  mContext.getSharedPreferences(PREF,Context.MODE_PRIVATE);
+        int role = shpr.getInt(ROLE,-1);
+        String token = shpr.getString(TOKEN,"");
+        return role;
     }
 
 }

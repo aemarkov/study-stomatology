@@ -20,6 +20,7 @@ import com.example.stomatologyclient.adapters.SubcategoriesAdapter;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
+import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.models.NamedModel;
 
 import java.util.List;
@@ -55,6 +56,9 @@ public class CategoryActivity extends AbstractNavigationActivity {
         final Call<Models.Category> categories = api.getCategory(id);
         final Activity context = this;
 
+        // Admin?
+        final boolean is_admin = StomatologyAccountManager.GetRole(this)==StomatologyAccountManager.ROLE_ADMIN;
+
         //Запрос
         categories.enqueue(new Callback<Models.Category>() {
             @Override
@@ -63,7 +67,7 @@ public class CategoryActivity extends AbstractNavigationActivity {
                 //Заполняем лист
                 Models.Category category = response.body();
                 context.setTitle(category.Name());
-                adapter = new SubcategoriesAdapter(context, category.Subcategories, true);
+                adapter = new SubcategoriesAdapter(context, category.Subcategories, is_admin);
 
                 //Обработчик нажатия на подкатегории
                 adapter.setOnHeaerEditListener(new OnListInteractListener() {

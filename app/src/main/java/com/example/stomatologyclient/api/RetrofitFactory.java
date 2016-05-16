@@ -1,5 +1,7 @@
 package com.example.stomatologyclient.api;
 
+import android.media.session.MediaSession;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -34,6 +36,8 @@ public class RetrofitFactory
      */
     public static Retrofit GetRetrofit()
     {
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())

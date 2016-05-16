@@ -17,6 +17,7 @@ import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
+import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.models.NamedModel;
 
 import java.util.List;
@@ -63,6 +64,7 @@ public class CategoriesFragment extends AbstractNavigationFragment implements On
         context.setTitle(context.getString(R.string.Categories));
 
         final OnListInteractListener listner = this;
+        final boolean is_admin = StomatologyAccountManager.GetRole(getActivity())==StomatologyAccountManager.ROLE_ADMIN;
 
         //Запрос
         categories.enqueue(new Callback<List<Models.Category>>() {
@@ -71,7 +73,7 @@ public class CategoriesFragment extends AbstractNavigationFragment implements On
 
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
-                adapter = new NamedListAdapter(context, items, true, false, false);
+                adapter = new NamedListAdapter(context, items, true, false, is_admin);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);
