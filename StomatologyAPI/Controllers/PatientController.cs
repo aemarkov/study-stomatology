@@ -9,6 +9,7 @@ using System.Web.Http;
 using StomatologyAPI.Abstract;
 using StomatologyAPI.Models.BindingModels;
 using StomatologyAPI.Infrastructure;
+using System.Data.Entity;
 
 namespace StomatologyAPI.Controllers
 {
@@ -28,7 +29,7 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles = "admin, doctor")]
         public override Patient Get(int id)
         {
-            return base.Get(id);
+            return m_repository.Entities.Include(x => x.Visits).Include(x=>x.Orders).FirstOrDefault(x => x.Id == id);
         }
 
         [Authorize(Roles = "admin, doctor")]
@@ -93,7 +94,7 @@ namespace StomatologyAPI.Controllers
         [Route("GetVisits")]
         public ICollection<PatientVisit> GetVisits(int patientId)
         {
-            return m_repository.GetById(patientId).Visits;
+            return m_repository.Entities.Include(x => x.Visits).FirstOrDefault(x => x.Id == patientId)?.Visits;
         }
 
 

@@ -10,6 +10,7 @@ using StomatologyAPI.Abstract;
 using StomatologyAPI.Models.BindingModels;
 using StomatologyAPI.Infrastructure;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace StomatologyAPI.Controllers
 {
@@ -20,10 +21,20 @@ namespace StomatologyAPI.Controllers
     public class PatientVisitController : AbstractAPIController<PatientVisit>
     {
         private IRepository<Procedure> procedure_repository;
+        private IRepository<Doctor> doctor_repository;
 
         public PatientVisitController(IUnitOfWork uof) : base(uof)
         {
             procedure_repository = uof.GetRepository<Procedure>();
+            doctor_repository = uof.GetRepository<Doctor>();
+        }
+
+
+        //Возвращает доктора текущего пользователя
+        Doctor get_current_doctor()
+        {
+            var user_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
+            return doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == user_id);
         }
 
         [Authorize(Roles = "admin, doctor")]
@@ -38,20 +49,25 @@ namespace StomatologyAPI.Controllers
             return m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == id);
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "doctor")]
         public override HttpResponseMessage Put([FromBody] PatientVisit value)
         {
+            var doctor = get_current_doctor();
+            if (doctor == null) throw new EntityNotFoundException();
+
             value.Date = DateTime.Now;
+            value.Doctor = doctor;
+
             return base.Put(value);
         }
 
-        [Authorize(Roles ="admin, doctor")]
+        [Authorize(Roles ="doctor")]
         public override HttpResponseMessage Post([FromBody] PatientVisit value)
         {
             return base.Post(value);
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "doctor")]
         //Добавляет процедуру в посещение
         [Route("AddProcedure")]
         public HttpResponseMessage AddProcedure(VisitProcedureBindingModel model)
@@ -72,7 +88,7 @@ namespace StomatologyAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "doctor")]
         [Route("RemoveProcedure")]
         //Удаляет процедуру из посещения
         public HttpResponseMessage RemoveProcedure(VisitProcedureBindingModel model)

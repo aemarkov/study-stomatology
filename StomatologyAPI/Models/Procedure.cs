@@ -27,6 +27,12 @@ namespace StomatologyAPI.Models
         public String Description { get; set; }
 
         /// <summary>
+        /// Картинка
+        /// </summary>
+        [MaxLength(255)]
+        public String Image { get; set; }
+
+        /// <summary>
         /// Связь с подкатегорией
         /// </summary>
         [Required]

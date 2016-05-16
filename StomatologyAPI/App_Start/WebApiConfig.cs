@@ -17,6 +17,7 @@ namespace StomatologyAPI
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+
             // Маршруты Web API
             config.MapHttpAttributeRoutes();
 

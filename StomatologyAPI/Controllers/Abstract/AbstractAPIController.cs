@@ -39,6 +39,10 @@ namespace StomatologyAPI.Controllers.Abstract
             {
                 return null;
             }
+            catch(Exception exp)
+            {
+                return null;
+            }
 
         }
 

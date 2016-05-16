@@ -244,6 +244,7 @@
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Infrastructure\DbInitializer.cs" />
     <Compile Include="Infrastructure\Exceptions.cs" />
+    <Compile Include="Infrastructure\NullFilter.cs" />
     <Compile Include="Infrastructure\ResponseCreator.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
@@ -282,6 +283,10 @@
     <Compile Include="Migrations\201605142245495_i_dont_know_what_changed_in_db.cs" />
     <Compile Include="Migrations\201605142245495_i_dont_know_what_changed_in_db.Designer.cs">
       <DependentUpon>201605142245495_i_dont_know_what_changed_in_db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605151833280_add_image_to_procedure.cs" />
+    <Compile Include="Migrations\201605151833280_add_image_to_procedure.Designer.cs">
+      <DependentUpon>201605151833280_add_image_to_procedure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
@@ -337,6 +342,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\stomatologyapi - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -402,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605142245495_i_dont_know_what_changed_in_db.resx">
       <DependentUpon>201605142245495_i_dont_know_what_changed_in_db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605151833280_add_image_to_procedure.resx">
+      <DependentUpon>201605151833280_add_image_to_procedure.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

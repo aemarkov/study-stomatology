@@ -41,8 +41,9 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles = "admin,doctor,dental_technican")]
         public override Order Get(int id)
         {
-            return m_repository.Entities.Include(x => x.Teeth).Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
-            
+            return m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
+
+
         }
 
         [Authorize(Roles ="admin,doctor")]

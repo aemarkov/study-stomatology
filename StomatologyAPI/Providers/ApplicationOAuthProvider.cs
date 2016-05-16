@@ -57,6 +57,12 @@ namespace StomatologyAPI.Providers
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
 
+            var roles = context.Identity.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
+
+            //У нас нет множественных ролей, так что...
+            var role = roles.First();
+
+            context.AdditionalResponseParameters.Add("role", role);
             return Task.FromResult<object>(null);
         }
 
