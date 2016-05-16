@@ -19,6 +19,8 @@
     <!--  НАЗВАНИЕ ACTIVITY -->
     <string name="title_activity_procedures">Процедура</string>
     <string name="title_activity_category">Категория</string>
+    <string name="title_activity_new_account">Регистрация</string>
+    <string name="title_activity_login">Вход</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -28,5 +30,7 @@
         <item>Муж</item>
         <item>Жен</item>
     </string-array>
+    <string name="title_activity_activity_login">ActivityLogin</string>
+    <string name="title_activity_register">RegisterActivity</string>
 
 </resources>

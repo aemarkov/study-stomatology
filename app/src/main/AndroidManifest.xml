@@ -51,7 +51,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.stomatologyclient.MainActivity" />
         </activity>
-        <activity android:name=".activity.NewAccountActivity"></activity>
+        <activity
+            android:name=".activity.ActivityLogin"
+            android:label="@string/title_activity_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
