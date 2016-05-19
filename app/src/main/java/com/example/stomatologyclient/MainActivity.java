@@ -1,5 +1,6 @@
 package com.example.stomatologyclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,16 +10,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.fragments.AboutFramgnet;
 import com.example.stomatologyclient.fragments.CategoriesFragment;
 import com.example.stomatologyclient.fragments.DoctorsFragment;
+import com.example.stomatologyclient.fragments.PatientsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView header_username;
+    Menu navigation_menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +44,75 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigation_menu = navigationView.getMenu();
+
+
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        header_username = (TextView)header.findViewById(R.id.header_username_view);
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        set_menu();;
+        String name = StomatologyAccountManager.getUsername(this);
+
+        if(name==null)
+            header_username.setVisibility(View.GONE);
+        else
+        {
+            header_username.setVisibility(View.VISIBLE);
+            header_username.setText(name);
+        }
+    }
+
+    private void set_menu()
+    {
+        int role = StomatologyAccountManager.getRole(this);
+
+
+        MenuItem visits = navigation_menu.findItem(R.id.nav_visits);
+        MenuItem patients = navigation_menu.findItem(R.id.nav_patients);
+        MenuItem orders = navigation_menu.findItem(R.id.nav_orders);
+        MenuItem logout = navigation_menu.findItem(R.id.nav_logout);
+        MenuItem login = navigation_menu.findItem(R.id.nav_signin);
+
+        //Добавление специифичных для каждой категории пользователей пунтков меню
+        if(role==StomatologyAccountManager.ROLE_PATIENT)
+        {
+            visits.setVisible(true);
+            orders.setVisible(false);
+            patients.setVisible(false);
+        }
+        else if(role==StomatologyAccountManager.ROLE_DOCTOR)
+        {
+            visits.setVisible(false);
+            orders.setVisible(false);
+            patients.setVisible(true);
+        }
+        else if(role==StomatologyAccountManager.ROLE_TECHNICAN)
+        {
+            visits.setVisible(false);
+            orders.setVisible(true);
+            patients.setVisible(false);
+        }
+        else if(role==StomatologyAccountManager.ROLE_ADMIN)
+        {
+            patients.setVisible(true);
+            orders.setVisible(true);
+            visits.setVisible(false);
+        }
+
+        if(role!=-1) {
+            logout.setVisible(true);
+            login.setVisible(false);
+        }
+        else
+        {
+            logout.setVisible(false);
+            login.setVisible(true);
+        }
     }
 
     @Override
@@ -49,10 +127,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the navigation_menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -92,6 +171,24 @@ public class MainActivity extends AppCompatActivity
         else if(id==R.id.nav_signin)
         {
             StomatologyAccountManager.showLoginActivity(this);
+        }
+        else if(id==R.id.nav_visits)
+        {
+
+        }
+        else if(id==R.id.nav_patients)
+        {
+            ft.replace(R.id.container,new PatientsFragment());
+        }
+        else if(id==R.id.nav_orders)
+        {
+
+        }
+        else if(id==R.id.nav_logout)
+        {
+            StomatologyAccountManager.logout(this);
+            finish();
+            startActivity(getIntent());
         }
 
         ft.commit();

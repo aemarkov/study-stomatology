@@ -10,13 +10,7 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class AbstractNavigationFragment extends  Fragment
 {
-    protected void start_activity_and_send_id(Class<? extends AppCompatActivity> activity, int id)
-    {
-        Intent intent = new Intent(getActivity(), activity);
-        intent.putExtra("id",id);
-        startActivity(intent);
 
-    }
 
 
 }

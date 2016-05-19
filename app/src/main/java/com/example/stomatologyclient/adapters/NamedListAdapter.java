@@ -76,13 +76,17 @@ public class NamedListAdapter extends  RecyclerView.Adapter<NameViewHolder> impl
         else
             holder.editor_panel.setVisibility(View.GONE);
 
-        if (has_image) {
+        if (has_image)
+        {
+            holder.imageView.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(items.get(position).Image)
                     .centerCrop()
                     .placeholder(context.getResources().getDrawable(R.drawable.ic_camera))
                     .into(holder.imageView);
         }
+        else
+            holder.imageView.setVisibility(View.GONE);
 
     }
 

@@ -168,7 +168,6 @@ public class Models
         public Integer PatientId;
         public Integer DoctorId;
         public List<Object> Procedures = new ArrayList<Object>();
-        public Integer Id;
 
         @Override
         public String Name() {

@@ -106,7 +106,8 @@ public class ActivityLogin extends AppCompatActivity {
                         JSONObject message = new JSONObject(response.body().string());
                         String token  = message.getString("access_token");
                         String role = message.getString("role");
-                        StomatologyAccountManager.saveToken(activity, token, role);
+                        String username = message.getString("userName");
+                        StomatologyAccountManager.saveToken(activity, token, role, username);
                         Helpers.ShowMessage(context, "Успешный вход", "", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

@@ -1,29 +1,20 @@
 package com.example.stomatologyclient.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.stomatologyclient.R;
-import com.example.stomatologyclient.adapters.NamedListAdapter;
 import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.adapters.SubcategoriesAdapter;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
-import com.example.stomatologyclient.models.NamedModel;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,11 +44,20 @@ public class CategoryActivity extends AbstractNavigationActivity {
         //Настройка запроса
         retrofit = RetrofitFactory.GetRetrofit();
         api = retrofit.create(API.class);
+
+    }
+
+    //Загрузка
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
         final Call<Models.Category> categories = api.getCategory(id);
         final Activity context = this;
 
         // Admin?
-        final boolean is_admin = StomatologyAccountManager.GetRole(this)==StomatologyAccountManager.ROLE_ADMIN;
+        final boolean is_admin = StomatologyAccountManager.getRole(this)==StomatologyAccountManager.ROLE_ADMIN;
 
         //Запрос
         categories.enqueue(new Callback<Models.Category>() {
@@ -115,7 +115,6 @@ public class CategoryActivity extends AbstractNavigationActivity {
                 Toast.makeText(context,"Не удалось загрузить процедуры",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
 }

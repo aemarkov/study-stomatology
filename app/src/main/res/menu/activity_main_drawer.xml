@@ -2,22 +2,47 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_menu_share"
-        android:title="@string/About" />
-    <item
-        android:id="@+id/nav_categories"
-        android:icon="@drawable/ic_menu_send"
-        android:title="@string/Categories" />
-    <item
-        android:id="@+id/nav_doctors"
-        android:icon="@drawable/ic_menu_send"
-        android:title="@string/Doctors" />
-    <item
-        android:id="@+id/nav_signin"
-        android:icon="@drawable/ic_menu_send"
-        android:title="@string/SignIn" />
+    <group android:id="@+id/default_group">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/About" />
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/Categories" />
+        <item
+            android:id="@+id/nav_doctors"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/Doctors" />
+        <item
+            android:id="@+id/nav_signin"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/SignIn" />
+    </group>
+    <group android:id="@+id/group_signed">
+        <item android:id="@+id/nav_visits"
+            android:visible="false"
+            android:title="@string/Visits"
+            android:icon="@drawable/ic_menu_send">
+        </item>
 
+        <item android:id="@+id/nav_patients"
+            android:visible="false"
+            android:title="@string/Patients"
+            android:icon="@drawable/ic_menu_send">
+        </item>
+
+        <item android:id="@+id/nav_orders"
+            android:visible="false"
+            android:title="@string/Orders"
+            android:icon="@drawable/ic_menu_send">
+        </item>
+        <item
+            android:visible="true"
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/Logout" />
+    </group>
 
 </menu>

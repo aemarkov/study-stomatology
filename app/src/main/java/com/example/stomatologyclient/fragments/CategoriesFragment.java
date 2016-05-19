@@ -30,33 +30,22 @@ import retrofit2.Retrofit;
 /**
  * Фрагмент страница категорий
  */
-public class CategoriesFragment extends AbstractNavigationFragment implements OnListInteractListener {
+public class CategoriesFragment extends AbstractListFragment
+{
 
-
-    private NamedListAdapter adapter;
-    private RecyclerView recyclerView;
-    private Retrofit retrofit;
-    private API api;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root =  inflater.inflate(R.layout.fragment_list, container, false);
+      return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
+    //Грузим категориии
+    @Override
+    public void onResume()
+    {
+        super.onResume();
 
-        recyclerView = (RecyclerView)root.findViewById(R.id.categories_list);
-
-        //Настройка запроса
-        retrofit = RetrofitFactory.GetRetrofit();
-        api = retrofit.create(API.class);
         Call<List<Models.Category>> categories = api.getCategories();
 
         //Настройка заголовка
@@ -64,7 +53,7 @@ public class CategoriesFragment extends AbstractNavigationFragment implements On
         context.setTitle(context.getString(R.string.Categories));
 
         final OnListInteractListener listner = this;
-        final boolean is_admin = StomatologyAccountManager.GetRole(getActivity())==StomatologyAccountManager.ROLE_ADMIN;
+        final boolean is_admin = StomatologyAccountManager.getRole(getActivity())==StomatologyAccountManager.ROLE_ADMIN;
 
         //Запрос
         categories.enqueue(new Callback<List<Models.Category>>() {
@@ -86,9 +75,7 @@ public class CategoriesFragment extends AbstractNavigationFragment implements On
             }
         });
 
-        return  root;
     }
-
 
     //////////////////////// ОБРАБОТЧИКИИ СОБЫТИЙ //////////////////////////////////////////////////
 

@@ -18,6 +18,7 @@ import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
+import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.models.NamedModel;
 
 import java.util.List;
@@ -30,13 +31,9 @@ import retrofit2.Retrofit;
 /**
  * Показ врачей
  */
-public class DoctorsFragment extends AbstractNavigationFragment implements OnListInteractListener
+public class DoctorsFragment extends AbstractListFragment
 {
 
-    private NamedListAdapter adapter;
-    private RecyclerView recyclerView;
-    private Retrofit retrofit;
-    private API api;
 
     public DoctorsFragment() {
         // Required empty public constructor
@@ -46,21 +43,25 @@ public class DoctorsFragment extends AbstractNavigationFragment implements OnLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root =  inflater.inflate(R.layout.fragment_list, container, false);
 
-        recyclerView = (RecyclerView)root.findViewById(R.id.categories_list);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-        //Настройка запроса
-        retrofit = RetrofitFactory.GetRetrofit();
-        api = retrofit.create(API.class);
+    //Загрузка
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
         Call<List<Models.Doctor>> categories = api.getDoctors();
 
         //Настройка заголовка
         final Activity context = getActivity();
-        context.setTitle(context.getString(R.string.Categories));
-
+        context.setTitle(context.getString(R.string.Doctors));
         final OnListInteractListener listner = this;
+
+        // Admin?
+        final boolean is_admin = StomatologyAccountManager.getRole(getActivity())==StomatologyAccountManager.ROLE_ADMIN;
 
         //Запрос
         categories.enqueue(new Callback<List<Models.Doctor>>() {
@@ -68,7 +69,7 @@ public class DoctorsFragment extends AbstractNavigationFragment implements OnLis
             public void onResponse(Call<List<Models.Doctor>> call, Response<List<Models.Doctor>> response) {
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
-                adapter = new NamedListAdapter(context, items, true, false, false);
+                adapter = new NamedListAdapter(context, items, true, false, is_admin);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);
@@ -80,10 +81,7 @@ public class DoctorsFragment extends AbstractNavigationFragment implements OnLis
                 Toast.makeText(context,"Не удалось загрузить врачей",Toast.LENGTH_SHORT).show();
             }
         });
-
-        return  root;
     }
-
 
 
     @Override

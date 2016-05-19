@@ -28,6 +28,7 @@ public class StomatologyAccountManager
     private final static String PREF="prefs";
     private final static String TOKEN = "token";
     private final static String ROLE = "role";
+    private final static String USER = "user";
 
     /*public StomatologyAccountManager(Activity context) {
         mContext = context;
@@ -53,7 +54,7 @@ public class StomatologyAccountManager
      * @param token
      * @param role
      */
-    public static void saveToken(Context mContext, String token, String role)
+    public static void saveToken(Context mContext, String token, String role, String username)
     {
         SharedPreferences shpr =  mContext.getSharedPreferences(PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor =shpr.edit();
@@ -67,6 +68,8 @@ public class StomatologyAccountManager
             editor.putInt(ROLE,ROLE_DOCTOR);
         else if(role.equals("dental_technican"))
             editor.putInt(ROLE,ROLE_TECHNICAN);
+
+        editor.putString(USER,username);
 
         editor.commit();
     }
@@ -110,12 +113,33 @@ public class StomatologyAccountManager
      * если не зарегестрирован
      * @return
      */
-    public static int GetRole(Context mContext)
+    public static int getRole(Context mContext)
     {
         SharedPreferences shpr =  mContext.getSharedPreferences(PREF,Context.MODE_PRIVATE);
         int role = shpr.getInt(ROLE,-1);
-        String token = shpr.getString(TOKEN,"");
         return role;
     }
 
+    /**
+     * Возвращает имя пользователя
+     * @param context
+     * @return
+     */
+    public static String getUsername(Context context)
+    {
+        SharedPreferences shpr =  context.getSharedPreferences(PREF,Context.MODE_PRIVATE);
+        return shpr.getString(USER,null);
+    }
+
+    /**
+     * Выход
+     */
+    public static void logout(Context context)
+    {
+        SharedPreferences shpr =  context.getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =shpr.edit();
+        editor.remove(ROLE);
+        editor.remove(TOKEN);
+        editor.commit();
+    }
 }

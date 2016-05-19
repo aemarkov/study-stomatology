@@ -1,5 +1,8 @@
 package com.example.stomatologyclient.api;
 
+import android.graphics.AvoidXfermode;
+import android.graphics.Paint;
+
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -81,6 +84,23 @@ public interface API
 
     @DELETE("api/doctor/{id}")
     Call<ResponseBody> deleteDoctor(@Path("id") int id);
+
+    //Пациенты
+    @GET("api/patient")
+    Call<List<Models.Patient>> getPatients();
+
+    @GET("api/patient/{id}")
+    Call<Models.Patient> getPatient(@Path("id") int id);
+
+    @PUT("api/patient")
+    Call<ResponseBody> putPatient(@Body Models.Patient patient);
+
+    @POST("api/patient")
+    Call<ResponseBody> postPatient(@Body Models.Patient patient);
+
+    @DELETE("api/patient/{id}")
+    Call<ResponseBody> deletePatient(@Path("id") int id);
+
 
     //Получение токена
     @FormUrlEncoded
