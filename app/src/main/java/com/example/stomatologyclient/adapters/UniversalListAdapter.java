@@ -17,31 +17,73 @@ import java.util.List;
  * Адаптер для отображения всяких списков от сервера
  */
 
-public class NamedListAdapter extends  RecyclerView.Adapter<NameViewHolder> implements View.OnClickListener {
+public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> implements View.OnClickListener {
     private List<? extends NamedModel> items;
     private LayoutInflater inflater;
 
     private boolean has_cost;       //Рисовать цену
-    private boolean has_edit;       //Рисовать область редактирования
+    private boolean has_edit_are;   //Рисовать область редактирования
+    private boolean has_remove;     //Рисовать кнопку удаления
+    private boolean has_edit;       //Рисовать кнопку удаления
     private boolean has_image;      //Рисовать картинку
 
     private Context context;
 
     OnListInteractListener listener;
 
-    public NamedListAdapter(Context context, List<? extends NamedModel> items, boolean has_image, boolean has_cost, boolean has_remove) {
+    /**
+     *
+     * @param context контекст
+     * @param items объекты для отображения
+     * @param has_image рисовать картинку?
+     * @param has_cost рисовать ценц?
+     * @param has_edit рисовать кнопку удаления?
+     * @param has_remove рисовать кнопку редактирования?
+     */
+    public UniversalListAdapter(Context context, List<? extends NamedModel> items, boolean has_image, boolean has_cost, boolean has_edit, boolean has_remove) {
         this.items = items;
         this.has_cost = has_cost;
         this.has_image = has_image;
-        this.has_edit = has_remove;
+        this.has_edit_are = has_edit || has_remove;
+        this.has_edit = has_edit;
+        this.has_remove = has_remove;
         this.context = context;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * Создает адаптер
+     * @param context контекст
+     * @param items объекты для отображения
+     * @param has_image рисовать картинку?
+     * @param has_cost рисовать ценц?
+     * @param has_edit_area рисовать удалить и редактипровать?
+     */
+    public UniversalListAdapter(Context context, List<? extends NamedModel> items, boolean has_image, boolean has_cost, boolean has_edit_area)
+    {
+        this(context, items, has_image, has_cost, has_edit_area, has_edit_area);
+    }
+
     //Устанавливает слушатель
     public void setOnListInteractListenr(OnListInteractListener listener) {
         this.listener = listener;
+    }
+
+    /**
+     * Удаляет запсь на основе индекса
+     * @param id
+     */
+    public void remove(int id)
+    {
+        for(int i = 0; i<items.size(); i++)
+            if(items.get(i).Id==id)
+            {
+                items.remove(i);
+                //notifyItemRangeRemoved(i,1);
+                notifyDataSetChanged();
+                break;
+            }
     }
 
     @Override
@@ -65,14 +107,27 @@ public class NamedListAdapter extends  RecyclerView.Adapter<NameViewHolder> impl
         holder.view.setTag(position);
         holder.nameTextView.setText(items.get(position).Name());
 
+        //Настройка видимости компонентов и отображение данных
         if (has_cost) {
             holder.costTextView.setVisibility(View.VISIBLE);
             holder.costTextView.setText(String.valueOf(items.get(position).Cost));
         } else
             holder.costTextView.setVisibility(View.GONE);
 
-        if (has_edit)
+        if (has_edit_are)
+        {
             holder.editor_panel.setVisibility(View.VISIBLE);
+
+            if(has_remove)
+                holder.imageViewRemove.setVisibility(View.VISIBLE);
+            else
+                holder.imageViewRemove.setVisibility(View.GONE);
+
+            if(has_edit)
+                holder.imageViewEdit.setVisibility(View.VISIBLE);
+            else
+                holder.imageViewEdit.setVisibility(View.GONE);
+        }
         else
             holder.editor_panel.setVisibility(View.GONE);
 
@@ -86,7 +141,7 @@ public class NamedListAdapter extends  RecyclerView.Adapter<NameViewHolder> impl
                     .into(holder.imageView);
         }
         else
-            holder.imageView.setVisibility(View.GONE);
+            holder.imageView.setVisibility(View.INVISIBLE);
 
     }
 

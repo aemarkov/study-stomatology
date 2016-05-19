@@ -2,12 +2,8 @@ package com.example.stomatologyclient.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +13,8 @@ import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
 
+
+import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +35,8 @@ public class PatientActivity extends AbstractNavigationActivity {
     @Knork.Id(R.id.patient_medcard)
     TextView patient_medcard;
 
+
+    SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class PatientActivity extends AbstractNavigationActivity {
                     patient_middlename.setText(patient_.PersonInfo.Middlename);
                     patient_medcard.setText(String.valueOf(patient_.MedicalCardNumber));
                     //TODO: дата рождения
+                    patient_birth.setText(format.format(patient_.DateOfBirth));
 
                     setTitle(patient_.Name());
 
@@ -79,13 +80,13 @@ public class PatientActivity extends AbstractNavigationActivity {
         });
     }
 
-    @Knork.On(Knork.CLICK + R.id.button_visits)
-    public void visits_click() {
-
+    @Knork.On({Knork.CLICK + R.id.button_visits})
+    public void visits_click(View v) {
+        start_activity_and_send_id(VisitsActivity.class, id);
     }
 
-    @Knork.On(Knork.CLICK + R.id.button_orders)
-    public  void orders_click()
+    @Knork.On({Knork.CLICK + R.id.button_orders})
+    public  void orders_click(View v)
     {
 
     }

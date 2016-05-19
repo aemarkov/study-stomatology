@@ -102,6 +102,26 @@ public interface API
     Call<ResponseBody> deletePatient(@Path("id") int id);
 
 
+    //Посещения
+    @GET("api/PatientVisit/{id}")
+    Call<Models.Visit> getVisit(@Path("id") int id);
+
+    @PUT("api/PatientVisit")
+    Call<ResponseBody> putVisit(@Body Models.Visit visit);
+
+    @POST("api/PatientVisit")
+    Call<ResponseBody> postVisit(@Body Models.Visit visit);
+
+    @DELETE("api/PatientVisit/{id}")
+    Call<ResponseBody> deleteVisit(@Path("id") int id);
+
+    @POST("api/PatientVisit/AddProcedure")
+    Call<ResponseBody> addProcedure(@Field("visitId") int visitId, @Field("procedureId") int procedureId);
+
+    @DELETE("api/PatientVisit/DeleteProcedure")
+    Call<ResponseBody> deleteProcedure(@Field("visitId") int visitId, @Field("procedureIndex") int procedureIndex);
+
+
     //Получение токена
     @FormUrlEncoded
     @POST("Token")

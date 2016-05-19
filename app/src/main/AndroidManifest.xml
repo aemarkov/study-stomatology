@@ -68,6 +68,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.stomatologyclient.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.VisitsActivity"
+            android:label="@string/title_activity_visits"
+            android:parentActivityName=".activity.PatientActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.stomatologyclient.activity.PatientActivity" />
+        </activity>
     </application>
 
 </manifest>

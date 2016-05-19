@@ -10,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.stomatologyclient.R;
-import com.example.stomatologyclient.activity.AbstractNavigationActivity;
-import com.example.stomatologyclient.adapters.NamedListAdapter;
+import com.example.stomatologyclient.adapters.UniversalListAdapter;
 import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.RetrofitFactory;
@@ -23,7 +22,7 @@ import retrofit2.Retrofit;
  */
 public abstract class AbstractListFragment extends Fragment implements OnListInteractListener
 {
-    protected NamedListAdapter adapter;
+    protected UniversalListAdapter adapter;
     protected RecyclerView recyclerView;
     protected Retrofit retrofit;
     protected API api;
@@ -40,7 +39,7 @@ public abstract class AbstractListFragment extends Fragment implements OnListInt
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_list, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.categories_list);
+        recyclerView = (RecyclerView) root.findViewById(R.id.list);
 
         //Настройка запроса
         retrofit = RetrofitFactory.GetRetrofit();
@@ -54,7 +53,7 @@ public abstract class AbstractListFragment extends Fragment implements OnListInt
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_list, container, false);
 
-        recyclerView = (RecyclerView) root.findViewById(R.id.categories_list);
+        recyclerView = (RecyclerView) root.findViewById(R.id.list);
 
         //Настройка запроса
         retrofit = RetrofitFactory.GetRetrofit(token);

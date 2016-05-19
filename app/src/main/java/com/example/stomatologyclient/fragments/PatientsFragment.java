@@ -3,7 +3,6 @@ package com.example.stomatologyclient.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.stomatologyclient.R;
 import com.example.stomatologyclient.activity.PatientActivity;
-import com.example.stomatologyclient.adapters.NamedListAdapter;
+import com.example.stomatologyclient.adapters.UniversalListAdapter;
 import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
@@ -64,7 +63,7 @@ public class PatientsFragment extends AbstractListFragment {
                 if (status == 200)
                 {
                     List<? extends NamedModel> items = response.body();
-                    adapter = new NamedListAdapter(context, items, false, false, false);
+                    adapter = new UniversalListAdapter(context, items, false, false, false);
                     adapter.setOnListInteractListenr(listner);
 
                     recyclerView.setAdapter(adapter);

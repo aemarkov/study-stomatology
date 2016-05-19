@@ -3,7 +3,6 @@ package com.example.stomatologyclient.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 
 import com.example.stomatologyclient.R;
 import com.example.stomatologyclient.activity.CategoryActivity;
-import com.example.stomatologyclient.adapters.NamedListAdapter;
+import com.example.stomatologyclient.adapters.UniversalListAdapter;
 import com.example.stomatologyclient.adapters.OnListInteractListener;
-import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
-import com.example.stomatologyclient.api.RetrofitFactory;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.models.NamedModel;
 
@@ -25,7 +22,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Фрагмент страница категорий
@@ -62,7 +58,7 @@ public class CategoriesFragment extends AbstractListFragment
 
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
-                adapter = new NamedListAdapter(context, items, true, false, is_admin);
+                adapter = new UniversalListAdapter(context, items, true, false, is_admin);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);

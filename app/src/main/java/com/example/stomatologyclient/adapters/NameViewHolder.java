@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.stomatologyclient.R;
 
 /**
- * ViewHolder для NamedListAdapter
+ * ViewHolder для UniversalListAdapter
  */
 public class NameViewHolder extends RecyclerView.ViewHolder
 {

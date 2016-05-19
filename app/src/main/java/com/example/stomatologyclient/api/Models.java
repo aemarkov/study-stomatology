@@ -144,7 +144,7 @@ public class Models
 
         public PersonInfo PersonInfo;
         public Integer MedicalCardNumber;
-        public Integer Age;
+        public Date DateOfBirth;
         public Boolean IsMen;
         public Integer ApplicationUserId;
         public Integer PersonInfoId;
@@ -171,7 +171,7 @@ public class Models
 
         @Override
         public String Name() {
-            return df.format(Date);
+            return Date!=null ? df.format(Date) : "null";
         }
     }
 
