@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.stomatologyclient.R;
+import com.example.stomatologyclient.activity.PatientActivity;
 import com.example.stomatologyclient.adapters.NamedListAdapter;
 import com.example.stomatologyclient.adapters.OnListInteractListener;
 import com.example.stomatologyclient.api.Models;
@@ -85,7 +86,7 @@ public class PatientsFragment extends AbstractListFragment {
     @Override
     public void OnItemClick(int id)
     {
-
+        start_activity_and_send_id(PatientActivity.class, id);
     }
 
     @Override

@@ -35,5 +35,6 @@
     </string-array>
     <string name="title_activity_activity_login">ActivityLogin</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_patient">PatientActivity</string>
 
 </resources>
