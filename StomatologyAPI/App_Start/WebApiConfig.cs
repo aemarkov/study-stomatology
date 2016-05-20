@@ -21,8 +21,6 @@ namespace StomatologyAPI
             // Маршруты Web API
             config.MapHttpAttributeRoutes();
 
-
-
             /*config.Routes.MapHttpRoute(
               name: "DefaultApiWithAction",
               routeTemplate: "api/{controller}/{action}/{id}",
@@ -37,6 +35,9 @@ namespace StomatologyAPI
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+
+			var json = config.Formatters.JsonFormatter;
+			json.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
 
         }
     }

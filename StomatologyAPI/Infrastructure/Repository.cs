@@ -20,6 +20,7 @@ namespace StomatologyAPI.Infrastructure
         public Repository()
         {
             context = new ApplicationDbContext();
+
         }
 
         public Repository(ApplicationDbContext context)

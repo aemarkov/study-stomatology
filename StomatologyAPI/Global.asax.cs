@@ -23,6 +23,7 @@ namespace StomatologyAPI
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.Re‌​ferenceLoopHandling = ReferenceLoopHandling.Ignore;
+			
 
             GlobalConfiguration.Configuration.Filters.Add(
                 new NullFilter());

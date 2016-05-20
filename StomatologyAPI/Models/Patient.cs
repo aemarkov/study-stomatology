@@ -21,8 +21,7 @@ namespace StomatologyAPI.Models
 		/// Возраст
 		/// </summary>
         [Required]
-        [Range(0, int.MaxValue)]
-        public int Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         /// <summary>
         /// Пол. Я до ужаса нетолерантный.

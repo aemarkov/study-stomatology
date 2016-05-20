@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201605151833280_add_image_to_procedure.Designer.cs">
       <DependentUpon>201605151833280_add_image_to_procedure.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605192013159_fix_some_models.cs" />
+    <Compile Include="Migrations\201605192013159_fix_some_models.Designer.cs">
+      <DependentUpon>201605192013159_fix_some_models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
     <Compile Include="Models\Abstract\IModel.cs" />
@@ -411,6 +415,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605151833280_add_image_to_procedure.resx">
       <DependentUpon>201605151833280_add_image_to_procedure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605192013159_fix_some_models.resx">
+      <DependentUpon>201605192013159_fix_some_models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

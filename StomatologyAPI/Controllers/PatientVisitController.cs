@@ -64,20 +64,26 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles ="doctor")]
         public override HttpResponseMessage Post([FromBody] PatientVisit value)
         {
-            return base.Post(value);
+			var doctor = get_current_doctor();
+			if (doctor == null) throw new EntityNotFoundException();
+
+			value.Doctor = doctor;
+
+			return base.Post(value);
         }
 
         [Authorize(Roles = "doctor")]
         //Добавляет процедуру в посещение
         [Route("AddProcedure")]
-        public HttpResponseMessage AddProcedure(VisitProcedureBindingModel model)
+		[HttpPost]
+        public HttpResponseMessage AddProcedure(int visitId, int procedureId)
         {
             try
             {
-                var visit = m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == model.VisitId);
+                var visit = m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == visitId);
                 if (visit == null) throw new EntityNotFoundException();
 
-                visit.Procedures.Add(procedure_repository.GetById(model.ProcedureId));
+                visit.Procedures.Add(procedure_repository.GetById(procedureId));
                 m_repository.Update(visit);
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -90,15 +96,16 @@ namespace StomatologyAPI.Controllers
 
         [Authorize(Roles = "doctor")]
         [Route("RemoveProcedure")]
+		[HttpDelete]
         //Удаляет процедуру из посещения
-        public HttpResponseMessage RemoveProcedure(VisitProcedureBindingModel model)
+        public HttpResponseMessage RemoveProcedure(int visitId, int procedureIndex)
         {
             try
             {
-                var visit = m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == model.VisitId);
+                var visit = m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == visitId);
                 if (visit == null) throw new EntityNotFoundException();
 
-                var procedure = visit.Procedures.ToList()[model.ProcedureId];
+                var procedure = visit.Procedures.ToList()[procedureIndex];
                 visit.Procedures.Remove(procedure);
                 m_repository.Update(visit);
 
@@ -109,5 +116,28 @@ namespace StomatologyAPI.Controllers
                 return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp);
             }
         }
-    }
+
+
+		[Authorize(Roles ="doctor")]
+		[Route("Close/{visitId}")]
+		[HttpGet]
+		public HttpResponseMessage Close(int visitId)
+		{
+			try
+			{
+				var visit = m_repository.GetById(visitId);
+				if (visit == null)
+					throw new EntityNotFoundException();
+
+				visit.IsClosed = true;
+				m_repository.Update(visit);
+
+				return new HttpResponseMessage(HttpStatusCode.OK);
+			}
+			catch (EntityNotFoundException exp)
+			{
+				return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp);
+			}
+		}
+	}
 }

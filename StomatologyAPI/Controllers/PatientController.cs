@@ -37,7 +37,7 @@ namespace StomatologyAPI.Controllers
         {
             try
             {
-                Patient patient = new Patient() { MedicalCardNumber = value.MedicalCardNumber, IsMen = value.IsMen, Age = value.Age };
+                Patient patient = new Patient() { MedicalCardNumber = value.MedicalCardNumber, IsMen = value.IsMen, DateOfBirth = value.DateOfBirth };
                 PersonInfo pi = new PersonInfo(value.Surname, value.Name, value.Middlename);
                 patient.PersonInfo = pi;
                 m_repository.Create(patient);

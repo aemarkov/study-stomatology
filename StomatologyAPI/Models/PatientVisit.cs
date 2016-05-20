@@ -23,6 +23,11 @@ namespace StomatologyAPI.Models
         /// </summary>
         public string Annotation { get; set; }
 
+		/// <summary>
+		/// Завершенное посещение нельзя редактировать
+		/// </summary>
+		public bool IsClosed { get; set; }
+
         //Пациент
         [Required]
         public int PatientId { get; set; }

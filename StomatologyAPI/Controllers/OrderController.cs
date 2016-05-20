@@ -22,12 +22,14 @@ namespace StomatologyAPI.Controllers
         IRepository<Doctor> doctor_repository;
         IRepository<DentalTechnican> technican_repository;
         IRepository<ClinicInfo> clinic_repository;
+		private IRepository<ToothWork> tooth_repository;
 
-        public OrderController(IUnitOfWork uof) : base(uof)
+		public OrderController(IUnitOfWork uof) : base(uof)
         {
             doctor_repository = uof.GetRepository<Doctor>();
             clinic_repository = uof.GetRepository<ClinicInfo>();
             technican_repository = uof.GetRepository<DentalTechnican>();
+			tooth_repository = uof.GetRepository<ToothWork>();
         }
 
         //Возвращает все невыполненные заказы
@@ -74,14 +76,15 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles = "admin, doctor")]
         //Добавляет процедуру в посещение
         [Route("AddTooth")]
-        public HttpResponseMessage AddTooth(ToothWork model)
+		[HttpPost]
+        public HttpResponseMessage AddTooth(int orderId, int toothNo, int procedureId)
         {
             try
             {
-                var order = m_repository.GetById(model.OrderId);
+                var order = m_repository.GetById(orderId);
                 if (order == null) throw new EntityNotFoundException();
 
-                order.Teeth.Add(model);
+                order.Teeth.Add(new ToothWork() { ToothNo = toothNo, ProcedureId = procedureId });
                 m_repository.Update(order);
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -94,18 +97,19 @@ namespace StomatologyAPI.Controllers
 
         [Authorize(Roles = "admin, doctor")]
         [Route("RemoveTooth")]
-        [HttpGet]
+        [HttpDelete]
         //Удаляет процедуру из посещения
         public HttpResponseMessage RemoveTooth(int orderId, int toothNo)
         {
             try
             {
-                var order = m_repository.Entities.Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == orderId);
+                var order = m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == orderId);
                 if (order == null) throw new EntityNotFoundException();
 
                 var tooth = order.Teeth.FirstOrDefault(x => x.ToothNo == toothNo);
-                order.Teeth.Remove(tooth);
-                m_repository.Update(order);
+				//order.Teeth.Remove(tooth);
+				//m_repository.Update(order);
+				tooth_repository.Delete(tooth);
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }

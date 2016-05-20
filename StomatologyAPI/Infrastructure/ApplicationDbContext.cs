@@ -45,6 +45,8 @@ namespace StomatologyAPI.Models
             builder.Entity<DentalTechnican>()
                 .HasRequired(x => x.PersonInfo);
 
+			
+
 
         }
 

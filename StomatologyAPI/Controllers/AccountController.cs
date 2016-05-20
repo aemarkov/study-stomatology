@@ -394,7 +394,7 @@ namespace StomatologyAPI.Controllers
             {
                 Patient patient = new Patient();
                 patient.IsMen = model.IsMen;
-                patient.Age = model.Age;
+                patient.DateOfBirth = model.DateOfBirth;
                 patient.MedicalCardNumber = model.MedicalCardNumber;
                 patient.ApplicationUserId = result.User.Id;
                 patient.PersonInfo = create_person_info(model);

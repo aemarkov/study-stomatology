@@ -71,10 +71,8 @@ namespace StomatologyAPI.Models
     /// </summary>
     public class PatientRegisterBindingModel : RegisterBindingModel
     {
-        [Display(Name = "Возраст")]
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int Age { get; set; }
+        [Display(Name = "Дата рождения")]
+        public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Номер полиса медицинского страхования")]
         public int? MedicalCardNumber { get; set; }
