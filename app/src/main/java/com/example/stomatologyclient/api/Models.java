@@ -166,6 +166,7 @@ public class Models
         public java.util.Date Date;
         public String Annotation;
         public Integer PatientId;
+        public Boolean IsClosed;
         public Integer DoctorId;
         public List<Object> Procedures = new ArrayList<Object>();
 

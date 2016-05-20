@@ -28,6 +28,7 @@
     <string name="title_activity_register">Регистрация</string>
     <string name="title_activity_patient"></string>
     <string name="title_activity_visits">Посещения</string>
+    <string name="title_activity_visit">Посещение</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -37,5 +38,6 @@
         <item>Муж</item>
         <item>Жен</item>
     </string-array>
+
 
 </resources>

@@ -26,7 +26,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-
+/**
+ * Активити, отображающая список посещений пациента
+ */
 public class VisitsActivity extends AbstractNavigationActivity implements OnListInteractListener
 {
 
@@ -45,13 +47,32 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.list);
+        final Context context = this;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //Создаем новое посещение
+                //Создание нового посещения
+                Models.Visit visit = new Models.Visit();
+                visit.PatientId = id;
+                Call<ResponseBody> resp = api.putVisit(visit);
+
+                resp.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if(response.code()==200)
+                            update_visits();
+                        else
+                            Toast.makeText(context,"Не удалось добавить посещение",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(context,"Не удалось добавть посещени",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -59,6 +80,11 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
         retrofit = RetrofitFactory.GetRetrofit(StomatologyAccountManager.getAuthToken(this));
         api = retrofit.create(API.class);
 
+        update_visits();
+    }
+
+    private void update_visits()
+    {
         final Context context = this;
         final OnListInteractListener listner = this;
 
@@ -80,12 +106,12 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
                 Toast.makeText(context,"Не удалось загрузить посещения",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
     public void OnItemClick(int id) {
         //Выбор визита
+        start_activity_and_send_id(VisitActivity.class, id);
     }
 
     @Override

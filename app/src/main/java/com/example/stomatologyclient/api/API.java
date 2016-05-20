@@ -121,6 +121,9 @@ public interface API
     @DELETE("api/PatientVisit/DeleteProcedure")
     Call<ResponseBody> deleteProcedure(@Field("visitId") int visitId, @Field("procedureIndex") int procedureIndex);
 
+    @GET("api/PatientVisit/Close/{visitId}")
+    Call<ResponseBody> closeVisit(@Path("visitId")int visitId);
+
 
     //Получение токена
     @FormUrlEncoded

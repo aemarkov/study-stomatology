@@ -7,4 +7,5 @@
     <color name="colorSuperAccent">#FF5722</color>
     <color name="colorGray">#727272</color>
     <color name="transparentGray">#AA000000</color>
+    <color name="red">#F44336</color>
 </resources>

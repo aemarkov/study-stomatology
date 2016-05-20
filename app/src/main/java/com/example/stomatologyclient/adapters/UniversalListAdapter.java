@@ -86,6 +86,11 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
             }
     }
 
+    public void insertEnd()
+    {
+        notifyItemInserted(items.size());
+    }
+
     @Override
     public NameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View convertView = inflater.inflate(R.layout.named_list_item, parent, false);
