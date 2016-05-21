@@ -65,11 +65,11 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
 
         Knork.inject(getWindow().getDecorView(), this);
 
+        //Добавление нового посещения
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Показываем диалог выбора процедуры
             }
         });
 
@@ -164,7 +164,7 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
 
     //Закрытие
     @Knork.On({Knork.CLICK + R.id.button_close})
-    public void closee_click(View v)
+    public void close_click(View v)
     {
         final Context context = this;
         final Call<ResponseBody> resp = api.closeVisit(visit_model.Id);
