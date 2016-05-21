@@ -34,4 +34,6 @@ public class NameViewHolder extends RecyclerView.ViewHolder
         editor_panel = itemView.findViewById(R.id.editor_panel);
         view = itemView;
     }
+
+    //public void bind()
 }

@@ -74,10 +74,18 @@
                         android:text="Примечания"
                         android:gravity="center"
                         android:textSize="20sp"/>
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="#DDD"/>
+
                     <EditText
+                        android:background="#ECEFF1"
                         android:id="@+id/visit_annotations"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView

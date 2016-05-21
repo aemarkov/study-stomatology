@@ -55,26 +55,31 @@ public class Models
     /**
      * Подкатегория
      */
-    public static class Subcategory
+    public static class Subcategory extends NamedModel
     {
         public String Name;
         public Integer CategoryId;
         public List<Procedure> Procedures = new ArrayList<Procedure>();
-        public int Id;
 
+        @Override
+        public String Name() {
+            return Name;
+        }
     }
 
     /**
      * Процедура
      */
-    public static class Procedure
+    public static class Procedure extends NamedModel
     {
         public String Name;
         public String Description;
         public Integer SubcategoryId;
-        public Integer Id;
-        public String Image;
-        public Double Cost;
+
+        @Override
+        public String Name() {
+            return Name;
+        }
     }
 
     /**
@@ -168,7 +173,7 @@ public class Models
         public Integer PatientId;
         public Boolean IsClosed;
         public Integer DoctorId;
-        public List<Object> Procedures = new ArrayList<Object>();
+        public List<Procedure> Procedures = new ArrayList<Procedure>();
 
         @Override
         public String Name() {

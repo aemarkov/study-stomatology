@@ -16,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Garrus on 15.05.2016.
@@ -116,8 +117,9 @@ public interface API
     Call<ResponseBody> deleteVisit(@Path("id") int id);
 
     @POST("api/PatientVisit/AddProcedure")
-    Call<ResponseBody> addProcedure(@Field("visitId") int visitId, @Field("procedureId") int procedureId);
+    Call<ResponseBody> addProcedure(@Query("visitId") int visitId, @Query("procedureId") int procedureId);
 
+    @FormUrlEncoded
     @DELETE("api/PatientVisit/DeleteProcedure")
     Call<ResponseBody> deleteProcedure(@Field("visitId") int visitId, @Field("procedureIndex") int procedureIndex);
 

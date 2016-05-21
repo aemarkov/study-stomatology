@@ -1,10 +1,12 @@
 package com.example.stomatologyclient.activity;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,8 +22,11 @@ import com.example.stomatologyclient.api.API;
 import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
+import com.example.stomatologyclient.dialogs.ProcedureSelectDialog;
+import com.example.stomatologyclient.models.NamedModel;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,7 +35,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import trikita.knork.Knork;
 
-public class VisitActivity extends AbstractNavigationActivity implements OnListInteractListener {
+public class VisitActivity extends AbstractNavigationActivity implements
+        OnListInteractListener,
+        ProcedureSelectDialog.OnItemeSelectedListener
+{
 
     @Knork.Id(R.id.list)
     RecyclerView recyclerView;
@@ -48,6 +56,8 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
     FloatingActionButton fab;
 
     private UniversalListAdapter adapter;
+    private List<Models.Procedure> procedures;
+
     private Retrofit retrofit;
     private API api;
 
@@ -64,17 +74,23 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Knork.inject(getWindow().getDecorView(), this);
+        final ProcedureSelectDialog.OnItemeSelectedListener listener = this;
+
 
         //Добавление нового посещения
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Показываем диалог выбора процедуры
+                ProcedureSelectDialog dlg = new ProcedureSelectDialog(listener);
+                android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                dlg.show(fm, "select_procedure");
             }
         });
 
         retrofit = RetrofitFactory.GetRetrofit(StomatologyAccountManager.getAuthToken(this));
         api = retrofit.create(API.class);
+
 
         update_visit();
     }
@@ -98,6 +114,13 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
                      date.setText(format.format(visit_model.Date));
 
                  annotations.setText(visit_model.Annotation);
+
+                 //Процедуры
+                 procedures = visit_model.Procedures;
+                 adapter = new UniversalListAdapter(context, procedures, false, false, false, true);
+                 recyclerView.setAdapter(adapter);
+                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
 
                  //Делаем элементы неактивынми, если посещение завершено
                  if (visit_model.IsClosed)
@@ -184,4 +207,31 @@ public class VisitActivity extends AbstractNavigationActivity implements OnListI
         });
     }
 
+
+    //Выбрана процедура для добавления в посещение
+    @Override
+    public void itemSelected(final Object item)
+    {
+        final Models.Procedure procedure = (Models.Procedure)item;
+        final Context context = this;
+
+        Call<ResponseBody> resp = api.addProcedure(id, procedure.Id);
+        resp.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code()==200)
+                {
+                    procedures.add(procedure);
+                    adapter.notifyItemInserted(procedures.size());
+                }
+                else
+                    Toast.makeText(context,"Не удалось добавить процедуру",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context,"Не удалось добавить процедуру",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

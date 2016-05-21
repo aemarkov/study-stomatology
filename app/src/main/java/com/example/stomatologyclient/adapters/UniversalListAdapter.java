@@ -80,8 +80,8 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
             if(items.get(i).Id==id)
             {
                 items.remove(i);
-                //notifyItemRangeRemoved(i,1);
-                notifyDataSetChanged();
+                notifyItemRangeRemoved(i,1);
+                //notifyDataSetChanged();
                 break;
             }
     }
@@ -106,16 +106,19 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(NameViewHolder holder, int position) {
-        holder.imageViewRemove.setTag(position);
-        holder.imageViewEdit.setTag(position);
-        holder.view.setTag(position);
-        holder.nameTextView.setText(items.get(position).Name());
+    public void onBindViewHolder(NameViewHolder holder, int position)
+    {
+        NamedModel item = items.get(position);
+
+        holder.imageViewRemove.setTag(item);
+        holder.imageViewEdit.setTag(item);
+        holder.view.setTag(item);
+        holder.nameTextView.setText(item.Name());
 
         //Настройка видимости компонентов и отображение данных
         if (has_cost) {
             holder.costTextView.setVisibility(View.VISIBLE);
-            holder.costTextView.setText(String.valueOf(items.get(position).Cost));
+            holder.costTextView.setText(String.valueOf(item.Cost));
         } else
             holder.costTextView.setVisibility(View.GONE);
 
@@ -140,7 +143,7 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
         {
             holder.imageView.setVisibility(View.VISIBLE);
             Glide.with(context)
-                    .load(items.get(position).Image)
+                    .load(item.Image)
                     .centerCrop()
                     .placeholder(context.getResources().getDrawable(R.drawable.ic_camera))
                     .into(holder.imageView);
@@ -159,8 +162,8 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        int tag = (int) v.getTag();
-        NamedModel model = items.get(tag);
+        //int tag = (int) v.getTag();
+        NamedModel model = (NamedModel)v.getTag();
 
         if (id == R.id.list_remove) {
             //Удалить
