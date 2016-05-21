@@ -18,6 +18,7 @@ namespace StomatologyAPI.Models
         /// Дата закаха
         /// </summary>
         public DateTime? Date { get; set; }
+		public DateTime? FinishDate { get; set; }
 
         /// <summary>
         /// Завершен??

@@ -21,6 +21,6 @@ namespace StomatologyAPI.Models
 		/// Стоимость процедуры
 		/// </summary>
 		[Required]
-        public int Cost { get; set; }
+        public decimal Cost { get; set; }
     }
 }

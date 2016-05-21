@@ -20,4 +20,18 @@ namespace StomatologyAPI.Infrastructure
     {
         public EntityNotFoundException():base("Entityt not found") { }
     }
+
+
+
+
+	public class LogicException:Exception
+	{
+		public LogicException() : base("Logic exception") { }
+		public LogicException(String message) : base(message) { }
+	}
+
+	public class EntityIsClosedException:LogicException
+	{
+		public EntityIsClosedException() : base("Enitity is already closed, you can't change it") { }
+	}
 }

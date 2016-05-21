@@ -10,6 +10,7 @@ using StomatologyAPI.Abstract;
 using Microsoft.AspNet.Identity;
 using StomatologyAPI.Infrastructure;
 using System.Data.Entity;
+using StomatologyAPI.Models.BindingModels;
 
 namespace StomatologyAPI.Controllers
 {
@@ -40,12 +41,30 @@ namespace StomatologyAPI.Controllers
             return orders;
         }
 
-        [Authorize(Roles = "admin,doctor,dental_technican")]
-        public override Order Get(int id)
+
+		[Authorize(Roles = "admin,doctor,dental_technican")]
+        public  new OrderBindingModel Get(int id)
         {
-            return m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
+            var order =  m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
+			var bind_order = new OrderBindingModel();
+			bind_order.Annotation = order.Annotation;
+			bind_order.ClinicInfo = order.ClinicInfo;
+			bind_order.Date = order.Date;
+			bind_order.DentalTechnican = order.DentalTechnican;
+			bind_order.DentalTechnicanId = order.DentalTechnicanId;
+			bind_order.Doctor = order.Doctor;
+			bind_order.DoctorId = order.DoctorId;
+			bind_order.FinishDate = order.FinishDate;
+			bind_order.Id = order.Id;
+			bind_order.IsClosed = order.IsClosed;
+			bind_order.IsFinished = order.IsFinished;
+			bind_order.Patient = order.Patient;
+			bind_order.PatientId = order.PatientId;
+			bind_order.Teeth = order.Teeth;
 
-
+			//Вычисление суммарной стоиости
+			bind_order.TotalCost = bind_order.Teeth.Select(x => x.Procedure).Aggregate((decimal)0, (a, x) => a + x.Cost);
+			return bind_order;
         }
 
         [Authorize(Roles ="admin,doctor")]
@@ -62,10 +81,21 @@ namespace StomatologyAPI.Controllers
         [Authorize(Roles ="admin,doctor")]
         public override HttpResponseMessage Post([FromBody] Order value)
         {
-            value.IsFinished = false;
-            value.Doctor = doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == System.Web.HttpContext.Current.User.Identity.GetUserId<int>());
-            return base.Post(value);
-        }
+			try
+			{
+				value.IsFinished = false;
+				value.Doctor = doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == System.Web.HttpContext.Current.User.Identity.GetUserId<int>());
+				if (value.IsClosed)throw new EntityIsClosedException();
+
+
+				return base.Post(value);
+			}
+			catch (EntityIsClosedException exp)
+			{
+				return ResponseCreator.GenerateResponse(HttpStatusCode.Forbidden, exp);
+			}
+		}
+
 
         [Authorize(Roles = "admin")]
         public override HttpResponseMessage Delete(int id)
@@ -83,6 +113,7 @@ namespace StomatologyAPI.Controllers
             {
                 var order = m_repository.GetById(orderId);
                 if (order == null) throw new EntityNotFoundException();
+				if (order.IsClosed) throw new EntityIsClosedException();
 
                 order.Teeth.Add(new ToothWork() { ToothNo = toothNo, ProcedureId = procedureId });
                 m_repository.Update(order);
@@ -93,7 +124,11 @@ namespace StomatologyAPI.Controllers
             {
                 return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp);
             }
-        }
+			catch (EntityIsClosedException exp)
+			{
+				return ResponseCreator.GenerateResponse(HttpStatusCode.Forbidden, exp);
+			}
+		}
 
         [Authorize(Roles = "admin, doctor")]
         [Route("RemoveTooth")]
@@ -105,6 +140,7 @@ namespace StomatologyAPI.Controllers
             {
                 var order = m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == orderId);
                 if (order == null) throw new EntityNotFoundException();
+				if (order.IsClosed)throw new EntityIsClosedException();
 
                 var tooth = order.Teeth.FirstOrDefault(x => x.ToothNo == toothNo);
 				//order.Teeth.Remove(tooth);
@@ -117,6 +153,10 @@ namespace StomatologyAPI.Controllers
             {
                 return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp);
             }
+			catch (EntityIsClosedException exp)
+			{
+				return ResponseCreator.GenerateResponse(HttpStatusCode.Forbidden, exp);
+			}
         }
 
         /// <summary>
