@@ -117,11 +117,10 @@ public interface API
     Call<ResponseBody> deleteVisit(@Path("id") int id);
 
     @POST("api/PatientVisit/AddProcedure")
-    Call<ResponseBody> addProcedure(@Query("visitId") int visitId, @Query("procedureId") int procedureId);
+    Call<ResponseBody> addVisitProcedure(@Query("visitId") int visitId, @Query("procedureId") int procedureId);
 
-    @FormUrlEncoded
-    @DELETE("api/PatientVisit/DeleteProcedure")
-    Call<ResponseBody> deleteProcedure(@Field("visitId") int visitId, @Field("procedureIndex") int procedureIndex);
+    @DELETE("api/PatientVisit/RemoveProcedure")
+    Call<ResponseBody> removeVisitProcedure(@Query("visitId") int visitId, @Query("procedureId") int procedureId);
 
     @GET("api/PatientVisit/Close/{visitId}")
     Call<ResponseBody> closeVisit(@Path("visitId")int visitId);

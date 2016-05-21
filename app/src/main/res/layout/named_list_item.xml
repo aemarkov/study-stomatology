@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
     android:paddingLeft="3dp"
     android:paddingTop="3dp"
     android:paddingBottom="3dp">
 
-    <ImageView
-        android:id="@+id/list_image"
-        android:layout_margin="3dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_camera"/>
 
-    <TextView
-        android:focusableInTouchMode="true"
-        android:id="@+id/list_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:textSize="20dp"
-        android:layout_gravity="center_vertical"
-        android:text="Name"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:focusableInTouchMode="true"
-        android:id="@+id/list_cost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:textSize="20dp"
-        android:layout_gravity="center_vertical"
-        android:text="9999р"/>
+        <ImageView
+            android:id="@+id/list_image"
+            android:layout_margin="3dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_camera"/>
 
-    <include layout="@layout/editor_panel"/>
+        <TextView
+            android:focusableInTouchMode="true"
+            android:id="@+id/list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical"
+            android:text="Name"/>
+
+        <TextView
+            android:focusableInTouchMode="true"
+            android:id="@+id/list_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="20dp"
+            android:layout_gravity="center_vertical"
+            android:text="9999р"/>
+
+        <include layout="@layout/editor_panel"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/separator"/>
 
 </LinearLayout>

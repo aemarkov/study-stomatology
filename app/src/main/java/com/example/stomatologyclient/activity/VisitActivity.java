@@ -1,11 +1,8 @@
 package com.example.stomatologyclient.activity;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +20,6 @@ import com.example.stomatologyclient.api.Models;
 import com.example.stomatologyclient.api.RetrofitFactory;
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.dialogs.ProcedureSelectDialog;
-import com.example.stomatologyclient.models.NamedModel;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -118,6 +114,7 @@ public class VisitActivity extends AbstractNavigationActivity implements
                  //Процедуры
                  procedures = visit_model.Procedures;
                  adapter = new UniversalListAdapter(context, procedures, false, false, false, true);
+                 adapter.setOnListInteractListenr(listner);
                  recyclerView.setAdapter(adapter);
                  recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -149,9 +146,27 @@ public class VisitActivity extends AbstractNavigationActivity implements
 
     }
 
+    //Удаление процедурыы
     @Override
-    public void OnRemoveClick(int id) {
+    public void OnRemoveClick(final int id) {
+        Call<ResponseBody> resp = api.removeVisitProcedure(this.id, id);
+        final Context context = this;
+        resp.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.code()==200)
+                {
+                    adapter.remove(id);
+                }
+                else
+                    Toast.makeText(context,"Не удалось удалить процедуру",Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context,"Не удалось удалить процедуру",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -215,7 +230,7 @@ public class VisitActivity extends AbstractNavigationActivity implements
         final Models.Procedure procedure = (Models.Procedure)item;
         final Context context = this;
 
-        Call<ResponseBody> resp = api.addProcedure(id, procedure.Id);
+        Call<ResponseBody> resp = api.addVisitProcedure(id, procedure.Id);
         resp.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

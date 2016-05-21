@@ -57,16 +57,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/login_button"
-                android:text="Войти"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/colorPrimary"/>
+                android:text="Войти"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/register_button"
-                android:text="Зарегистрироваться"
-                android:textColor="@android:color/white"/>
+                android:text="Зарегистрироваться"/>
 
 
         </LinearLayout>
