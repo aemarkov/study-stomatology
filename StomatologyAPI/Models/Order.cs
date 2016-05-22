@@ -34,7 +34,7 @@ namespace StomatologyAPI.Models
         //Пациент
         [Required]
         public int PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
+        public Patient Patient { get; set; }
 
 		/// <summary>
 		/// Завершенный заказ нельзя редактировать

@@ -33,8 +33,16 @@ namespace StomatologyAPI.Controllers
 			tooth_repository = uof.GetRepository<ToothWork>();
         }
 
-        //Возвращает все невыполненные заказы
-        [Authorize(Roles ="admin,dental_technican")]
+
+		//Возвращает доктора текущего пользователя
+		Doctor get_current_doctor()
+		{
+			var user_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
+			return doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == user_id);
+		}
+
+		//Возвращает все невыполненные заказы
+		[Authorize(Roles ="admin,dental_technican")]
         public override IEnumerable<Order> Get()
         {
             var orders = m_repository.Entities.Where(x => !x.IsFinished).ToList();
@@ -57,7 +65,7 @@ namespace StomatologyAPI.Controllers
         {
             value.IsFinished = false;
             var user_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
-            value.Doctor =  doctor_repository.Entities.FirstOrDefault(x=>x.ApplicationUserId== user_id);
+			value.Doctor = get_current_doctor();// doctor_repository.Entities.FirstOrDefault(x=>x.ApplicationUserId== user_id);
             value.Date = DateTime.Now;
             value.ClinicInfo = clinic_repository.Entities.First();
             return base.Put(value);
@@ -68,9 +76,12 @@ namespace StomatologyAPI.Controllers
         {
 			try
 			{
-				value.IsFinished = false;
-				value.Doctor = doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == System.Web.HttpContext.Current.User.Identity.GetUserId<int>());
-				if (value.IsClosed)throw new EntityIsClosedException();
+				if (value.IsClosed) throw new EntityIsClosedException();
+				//value.IsFinished = false;
+
+				/*var doctor = get_current_doctor();
+				if (doctor == null) throw new EntityNotFoundException();
+				value.Doctor = get_current_doctor(); // doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == System.Web.HttpContext.Current.User.Identity.GetUserId<int>());*/
 
 
 				return base.Post(value);
@@ -116,21 +127,21 @@ namespace StomatologyAPI.Controllers
 		}
 
         [Authorize(Roles = "doctor")]
-        [Route("RemoveTooth")]
+        [Route("RemoveTooth/{id}")]
         [HttpDelete]
         //Удаляет процедуру из посещения
-        public HttpResponseMessage RemoveTooth(int orderId, int toothNo)
+        public HttpResponseMessage RemoveTooth(int id)
         {
             try
             {
-                var order = m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == orderId);
+                /*var order = m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == orderId);
                 if (order == null) throw new EntityNotFoundException();
 				if (order.IsClosed)throw new EntityIsClosedException();
 
                 var tooth = order.Teeth.FirstOrDefault(x => x.ToothNo == toothNo);
 				//order.Teeth.Remove(tooth);
-				//m_repository.Update(order);
-				tooth_repository.Delete(tooth);
+				//m_repository.Update(order);*/
+				tooth_repository.Delete(id);
 
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -146,7 +157,7 @@ namespace StomatologyAPI.Controllers
 
 		[Authorize(Roles="doctor")]
 		[HttpGet]
-		[Route("Close")]
+		[Route("Close/{orderId}")]
 
 		public HttpResponseMessage Close(int orderId)
 		{
@@ -173,7 +184,7 @@ namespace StomatologyAPI.Controllers
         /// <param name="orderId"></param>
         /// <returns></returns>
         [Authorize(Roles ="dental_technican")]
-        [Route("Finish")]
+        [Route("Finish/{orderId}")]
         [HttpGet]
         public HttpResponseMessage Finish(int orderId)
         {
