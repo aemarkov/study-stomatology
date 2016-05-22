@@ -88,7 +88,7 @@ public class PatientActivity extends AbstractNavigationActivity {
     @Knork.On({Knork.CLICK + R.id.button_orders})
     public  void orders_click(View v)
     {
-        start_activity_and_send_id(PatientOrdersActivity.class, id);
+        start_activity_and_send_id(OrdersActivity.class, id);
     }
 
 }

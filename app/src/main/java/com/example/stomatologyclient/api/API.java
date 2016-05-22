@@ -148,8 +148,28 @@ public interface API
     @POST("/api/order/AddTooth")
     Call<ResponseBody> addToith(@Query("orderId") int orderId, @Query("toothNo") int toothNo, @Query("procedureId") int procedureId);
 
-    @DELETE("/api/order/RemoveTooth")
-    Call<ResponseBody> removeTooth(@Query("orderId") int orderId, @Query("toothNo") int toothNo);
+    @DELETE("/api/order/RemoveTooth/{id}")
+    Call<ResponseBody> removeTooth(@Path("id") int id);
+
+    @GET("/api/order/Finish/{id}")
+    Call<ResponseBody> finishOrder(@Path("id") int id);
+
+    @GET("/api/order/Close/{id}")
+    Call<ResponseBody> closeOrder(@Path("id") int id);
+
+
+    //Процедуры техника (изделия?)
+    @GET("/api/TechnicanProcedure")
+    Call<List<Models.TechnicanProcedure>> getTechnicanProcedures();
+
+    @PUT("/api/TechnicanProcedure")
+    Call<ResponseBody> putTechnicanProcedure(@Body Models.TechnicanProcedure procedure);
+
+    @POST("/api/TechnicanProcedure")
+    Call<ResponseBody> poistTechnicanProcedure(@Body Models.TechnicanProcedure procedure);
+
+    @DELETE("/api/TechnicanProcedure/{id}")
+    Call<ResponseBody> deleteTechnicanProcedure(@Path("id") int id);
 
     //Получение токена
     @FormUrlEncoded

@@ -3,8 +3,6 @@ package com.example.stomatologyclient.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +31,7 @@ import trikita.knork.Knork;
  * Если нужен пациент - в интент передается его ID
  * Если ID нет (-1) значит нужно всех показывать
  */
-public class PatientOrdersActivity extends AbstractNavigationActivity implements OnListInteractListener {
+public class OrdersActivity extends AbstractNavigationActivity implements OnListInteractListener {
 
     @Knork.Id(R.id.list)
     RecyclerView recyclerView;
@@ -47,7 +45,7 @@ public class PatientOrdersActivity extends AbstractNavigationActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_orders);
+        setContentView(R.layout.activity_orders);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_height="wrap_content"
     android:paddingLeft="3dp"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp">
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp">
 
 
     <LinearLayout
@@ -39,7 +39,9 @@
             android:layout_gravity="center_vertical"
             android:text="9999р"/>
 
-        <include layout="@layout/editor_panel"/>
+        <include layout="@layout/editor_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <View

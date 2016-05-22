@@ -58,6 +58,7 @@ public class VisitActivity extends AbstractNavigationActivity implements
     private API api;
 
     Models.Visit visit_model;
+    boolean is_doctor;
 
     SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -85,7 +86,7 @@ public class VisitActivity extends AbstractNavigationActivity implements
         });
 
         //Проверка ролей
-        boolean is_doctor = StomatologyAccountManager.getRole(this)==StomatologyAccountManager.ROLE_DOCTOR;
+        is_doctor = StomatologyAccountManager.getRole(this)==StomatologyAccountManager.ROLE_DOCTOR;
         if(is_doctor)
             fab.setVisibility(View.VISIBLE);
         else
@@ -120,7 +121,7 @@ public class VisitActivity extends AbstractNavigationActivity implements
 
                  //Процедуры
                  procedures = visit_model.Procedures;
-                 adapter = new UniversalListAdapter(context, procedures, false, false, false, true);
+                 adapter = new UniversalListAdapter(context, procedures, false, false, false, is_doctor && !visit_model.IsClosed);
                  adapter.setOnListInteractListenr(listner);
                  recyclerView.setAdapter(adapter);
                  recyclerView.setLayoutManager(new LinearLayoutManager(context));

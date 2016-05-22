@@ -118,7 +118,7 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
         //Настройка видимости компонентов и отображение данных
         if (has_cost) {
             holder.costTextView.setVisibility(View.VISIBLE);
-            holder.costTextView.setText(String.valueOf(item.Cost));
+            holder.costTextView.setText(String.valueOf(item.Cost()));
         } else
             holder.costTextView.setVisibility(View.GONE);
 
@@ -149,7 +149,7 @@ public class UniversalListAdapter extends  RecyclerView.Adapter<NameViewHolder> 
                     .into(holder.imageView);
         }
         else
-            holder.imageView.setVisibility(View.INVISIBLE);
+            holder.imageView.setVisibility(View.GONE);
 
     }
 

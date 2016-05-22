@@ -7,10 +7,15 @@ import com.example.stomatologyclient.api.Models;
  */
 public abstract class NamedModel
 {
-    public float Cost;
+    //public float Cost;
     public String Image;
     public int Id;
 
     public abstract String Name();
+
+    public  float Cost()
+    {
+        return  0;
+    }
 
 }

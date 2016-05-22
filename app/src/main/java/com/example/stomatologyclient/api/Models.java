@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import retrofit2.http.Body;
+
 /**
  * Список моделей для Retrofit.
  * Наследование от NamedModel  нужно, чтобы
@@ -83,10 +85,17 @@ public class Models
         public String Name;
         public String Description;
         public Integer SubcategoryId;
+        public float Cost;
 
         @Override
         public String Name() {
             return Name;
+        }
+
+        @Override
+        public float Cost()
+        {
+            return  Cost;
         }
     }
 
@@ -198,18 +207,21 @@ public class Models
         public Doctor Doctor;
         public ClinicInfo ClinicInfo;
         public java.util.Date Date;
+        public java.util.Date FinishDate;
+        public Boolean IsClosed;
         public Boolean IsFinished;
         public String Annotation;
         public Integer PatientId;
         public Integer DoctorId;
         public Integer DentalTechnicanId;
         public Integer ClinicInfoId;
+        public float Cost;
 
-        public List<Object> Teeth = new ArrayList<Object>();
+        public List<Tooth> Teeth = new ArrayList<Tooth>();
 
         @Override
         public String Name() {
-            return "#"+Id+" - "+df.format(Date);
+            return "#"+Id+" - "+(Date != null ? df.format(Date) :"");
         }
 
     }
@@ -217,24 +229,44 @@ public class Models
     /**
      * Элемент наряд заказа - работа по зубу
      */
-    public static class Tooth {
+    public static class Tooth extends NamedModel
+    {
 
         public Integer ToothNo;
         public Integer ProcedureId;
         public TechnicanProcedure Procedure;
         public Integer OrderId;
-        public Integer Id;
+
+
+        @Override
+        public String Name() {
+            return "Зуб "+ToothNo+": "+Procedure.Name;
+        }
+
+        @Override
+        public float Cost()
+        {
+            return Procedure.Cost;
+        }
     }
 
     /**
      * То, что может изготовить техние
      */
-    public static class TechnicanProcedure {
-
+    public static class TechnicanProcedure extends NamedModel
+    {
         public String Name;
         public Integer Cost;
-        public Integer Id;
 
+        @Override
+        public String Name() {
+            return Name;
+        }
+
+        @Override
+        public float Cost(){
+            return Cost;
+        }
     }
 
     // РЕГИСТРАЦИЯ

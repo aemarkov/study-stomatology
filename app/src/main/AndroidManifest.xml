@@ -87,7 +87,7 @@
                 android:value="com.example.stomatologyclient.activity.VisitsActivity" />
         </activity>
         <activity
-            android:name=".activity.PatientOrdersActivity"
+            android:name=".activity.OrdersActivity"
             android:label="@string/title_activity_patient_orders"
             android:parentActivityName=".activity.PatientActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -98,11 +98,11 @@
         <activity
             android:name=".activity.OrderActivity"
             android:label="@string/title_activity_new_order"
-            android:parentActivityName=".activity.PatientOrdersActivity"
+            android:parentActivityName=".activity.OrdersActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.stomatologyclient.activity.PatientOrdersActivity" />
+                android:value=".activity.OrdersActivity" />
         </activity>
     </application>
 
