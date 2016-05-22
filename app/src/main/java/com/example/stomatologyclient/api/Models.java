@@ -273,7 +273,7 @@ public class Models
 
     public static class PatientRegistrationViewModel {
 
-        public Integer Age;
+        public Date DateOfBirth;
         public Integer MedicalCardNumber;
         public Boolean IsMen;
         public String Email;
@@ -287,7 +287,6 @@ public class Models
 
     public static class DoctorRegistrationViewModel {
 
-        public Integer Age;
         public String Email;
         public String Password;
         public String ConfirmPassword;
@@ -301,7 +300,6 @@ public class Models
 
     public static class TechnicanRegistrationViewModel {
 
-        public Integer Age;
         public String Email;
         public String Password;
         public String ConfirmPassword;

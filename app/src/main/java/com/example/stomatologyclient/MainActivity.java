@@ -21,6 +21,7 @@ import com.example.stomatologyclient.fragments.AboutFramgnet;
 import com.example.stomatologyclient.fragments.CategoriesFragment;
 import com.example.stomatologyclient.fragments.DoctorsFragment;
 import com.example.stomatologyclient.fragments.OrdersFragment;
+import com.example.stomatologyclient.fragments.PatientFragment;
 import com.example.stomatologyclient.fragments.PatientsFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id==R.id.nav_visits)
         {
-
+            ft.replace(R.id.container, new PatientFragment());
         }
         else if(id==R.id.nav_patients)
         {

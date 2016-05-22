@@ -96,16 +96,21 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
         final OnListInteractListener listner = this;
 
         //Запрос
-        Call<Models.Patient> visits = api.getPatient(id);
+        Call<Models.Patient> visits = get_patient_call();//api.getPatient(id);
         visits.enqueue(new Callback<Models.Patient>() {
             @Override
-            public void onResponse(Call<Models.Patient> call, Response<Models.Patient> response) {
-                List<? extends NamedModel> items = response.body().Visits;
-                adapter = new UniversalListAdapter(context, items, false, false, false, false);
-                adapter.setOnListInteractListenr( listner);
+            public void onResponse(Call<Models.Patient> call, Response<Models.Patient> response)
+            {
+                if(response.code()==200) {
+                    List<? extends NamedModel> items = response.body().Visits;
+                    adapter = new UniversalListAdapter(context, items, false, false, false, false);
+                    adapter.setOnListInteractListenr(listner);
 
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                }
+                else
+                    Toast.makeText(context,"Не удалось загрузить посещения",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -113,6 +118,14 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
                 Toast.makeText(context,"Не удалось загрузить посещения",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private Call<Models.Patient> get_patient_call()
+    {
+        if(id!=-1)
+            return api.getPatient(id);
+        else
+            return api.getCurrentPatient();
     }
 
     @Override

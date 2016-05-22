@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,6 +22,7 @@ import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.utils.Helpers;
 
 import java.io.IOException;
+import java.util.Date;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -39,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText name;
     EditText middlename;
 
-    EditText age;
+    DatePicker birth;
     EditText polis;
     Spinner sex;
 
@@ -64,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         name = (EditText)findViewById(R.id.name_edit);
         middlename = (EditText)findViewById(R.id.middlename_edit);
 
-        age = (EditText)findViewById(R.id.age_edit);
+        birth = (DatePicker) findViewById(R.id.date_picker);
         polis = (EditText)findViewById(R.id.polis_edit);
         sex = (Spinner) findViewById(R.id.sex_spinner);
 
@@ -103,9 +105,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(token_type==StomatologyAccountManager.ROLE_PATIENT) {
             String[] sex_arr = getResources().getStringArray(R.array.sex);
             model.IsMen = sex.getSelectedItem().toString().equals(sex_arr[0]);
-            model.Age = parse_int(age.getText().toString(),0);
             model.MedicalCardNumber = parse_int(polis.getText().toString(),0);
             resp = api.registerPatient(model);
+            model.DateOfBirth = new Date((int)birth.getY(), birth.getMonth(),birth.getDayOfMonth());
         }
         else
             return;

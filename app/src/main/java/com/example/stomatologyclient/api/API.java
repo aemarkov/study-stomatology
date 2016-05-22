@@ -105,6 +105,8 @@ public interface API
     @DELETE("api/patient/{id}")
     Call<ResponseBody> deletePatient(@Path("id") int id);
 
+    @GET("api/patient/GetMe")
+    Call<Models.Patient> getCurrentPatient();
 
     //Посещения
     @GET("api/PatientVisit/{id}")

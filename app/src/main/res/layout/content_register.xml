@@ -134,7 +134,7 @@
                 android:id="@+id/registration_patient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_margin="10dp"
@@ -142,22 +142,18 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Возвраст"
-                            android:layout_weight="2.5"/>
-                        <EditText
-                            android:id="@+id/age_edit"
-                            android:inputType="number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
+                        android:text="Дата рождения"
+                        android:layout_margin="10dp"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="2.5"/>
+
+                    <DatePicker
+                        android:id="@+id/date_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></DatePicker>
 
                     <LinearLayout
                         android:layout_width="match_parent"
