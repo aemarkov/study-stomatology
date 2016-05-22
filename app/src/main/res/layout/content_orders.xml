@@ -8,10 +8,11 @@
     tools:context=".activity.OrdersActivity"
     tools:showIn="@layout/activity_orders">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:id="@+id/order_list_container">
+
+    </FrameLayout>
 
 </RelativeLayout>

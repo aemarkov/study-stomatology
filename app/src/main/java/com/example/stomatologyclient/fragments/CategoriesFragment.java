@@ -58,7 +58,7 @@ public class CategoriesFragment extends AbstractListFragment
 
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
-                adapter = new UniversalListAdapter(context, items, true, false, is_admin);
+                adapter = new UniversalListAdapter(context, items, true, false, false);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);

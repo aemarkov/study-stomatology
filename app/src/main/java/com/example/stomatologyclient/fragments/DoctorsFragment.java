@@ -65,7 +65,7 @@ public class DoctorsFragment extends AbstractListFragment
             public void onResponse(Call<List<Models.Doctor>> call, Response<List<Models.Doctor>> response) {
                 //Заполняем лист
                 List<? extends NamedModel> items = response.body();
-                adapter = new UniversalListAdapter(context, items, true, false, is_admin);
+                adapter = new UniversalListAdapter(context, items, true, false, false);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);

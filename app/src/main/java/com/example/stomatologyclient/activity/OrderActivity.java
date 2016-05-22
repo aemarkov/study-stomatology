@@ -154,7 +154,7 @@ public class OrderActivity extends AbstractNavigationActivity implements
                         set_closed();
 
                     if(order.IsFinished)
-                        finish_order.setVisibility(View.VISIBLE);
+                        order_finished.setVisibility(View.VISIBLE);
 
                 }
                 else
@@ -271,7 +271,7 @@ public class OrderActivity extends AbstractNavigationActivity implements
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code()==200)
-                    finish_order.setVisibility(View.VISIBLE);
+                    order_finished.setVisibility(View.VISIBLE);
                 else
                     Toast.makeText(context,"Не удалось закрыть посещение",Toast.LENGTH_SHORT).show();
             }
@@ -288,6 +288,7 @@ public class OrderActivity extends AbstractNavigationActivity implements
     public void OnToothWorkSelected(final Models.Tooth tooth)
     {
         final Context context = this;
+        tooth.OrderId = id;
         Call<ResponseBody>  resp = api.addToith(id,tooth.ToothNo, tooth.ProcedureId);
         resp.enqueue(new Callback<ResponseBody>() {
             @Override

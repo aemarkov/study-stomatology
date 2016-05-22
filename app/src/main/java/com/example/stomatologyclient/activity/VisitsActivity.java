@@ -101,7 +101,7 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
             @Override
             public void onResponse(Call<Models.Patient> call, Response<Models.Patient> response) {
                 List<? extends NamedModel> items = response.body().Visits;
-                adapter = new UniversalListAdapter(context, items, false, false, false, true);
+                adapter = new UniversalListAdapter(context, items, false, false, false, false);
                 adapter.setOnListInteractListenr( listner);
 
                 recyclerView.setAdapter(adapter);

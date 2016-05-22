@@ -20,6 +20,7 @@ import com.example.stomatologyclient.auth.StomatologyAccountManager;
 import com.example.stomatologyclient.fragments.AboutFramgnet;
 import com.example.stomatologyclient.fragments.CategoriesFragment;
 import com.example.stomatologyclient.fragments.DoctorsFragment;
+import com.example.stomatologyclient.fragments.OrdersFragment;
 import com.example.stomatologyclient.fragments.PatientsFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id==R.id.nav_orders)
         {
-
+            ft.replace(R.id.container, new OrdersFragment());
         }
         else if(id==R.id.nav_logout)
         {

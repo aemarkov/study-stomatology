@@ -67,7 +67,7 @@ public class CategoryActivity extends AbstractNavigationActivity {
                 //Заполняем лист
                 Models.Category category = response.body();
                 context.setTitle(category.Name());
-                adapter = new SubcategoriesAdapter(context, category.Subcategories, is_admin);
+                adapter = new SubcategoriesAdapter(context, category.Subcategories, false);
 
                 //Обработчик нажатия на подкатегории
                 adapter.setOnHeaerEditListener(new OnListInteractListener() {
