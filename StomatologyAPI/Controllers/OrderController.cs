@@ -52,7 +52,7 @@ namespace StomatologyAPI.Controllers
 			return order;
 		}
 
-        [Authorize(Roles ="admin,doctor")]
+        [Authorize(Roles ="doctor")]
         public override HttpResponseMessage Put([FromBody] Order value)
         {
             value.IsFinished = false;
@@ -63,7 +63,7 @@ namespace StomatologyAPI.Controllers
             return base.Put(value);
         }
 
-        [Authorize(Roles ="admin,doctor")]
+        [Authorize(Roles ="doctor")]
         public override HttpResponseMessage Post([FromBody] Order value)
         {
 			try
@@ -88,7 +88,7 @@ namespace StomatologyAPI.Controllers
             return base.Delete(id);
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "doctor")]
         //Добавляет процедуру в посещение
         [Route("AddTooth")]
 		[HttpPost]
@@ -115,7 +115,7 @@ namespace StomatologyAPI.Controllers
 			}
 		}
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "doctor")]
         [Route("RemoveTooth")]
         [HttpDelete]
         //Удаляет процедуру из посещения
@@ -143,6 +143,29 @@ namespace StomatologyAPI.Controllers
 				return ResponseCreator.GenerateResponse(HttpStatusCode.Forbidden, exp);
 			}
         }
+
+		[Authorize(Roles="doctor")]
+		[HttpGet]
+		[Route("Close")]
+
+		public HttpResponseMessage Close(int orderId)
+		{
+			try
+			{
+				var order = m_repository.GetById(orderId);
+				if (order == null)
+					throw new EntityNotFoundException();
+
+				order.IsClosed = true;
+				m_repository.Update(order);
+
+				return new HttpResponseMessage(HttpStatusCode.OK);
+			}
+			catch (EntityNotFoundException exp)
+			{
+				return ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, exp);
+			}
+		}
 
         /// <summary>
         /// Завершает заказ
