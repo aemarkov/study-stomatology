@@ -300,13 +300,20 @@
     <Compile Include="Migrations\201605212226316_a_ya_ebu_chto_li.Designer.cs">
       <DependentUpon>201605212226316_a_ya_ebu_chto_li.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605220757372_add_total_cost.cs" />
+    <Compile Include="Migrations\201605220757372_add_total_cost.Designer.cs">
+      <DependentUpon>201605220757372_add_total_cost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605220800285_remove_descriminator.cs" />
+    <Compile Include="Migrations\201605220800285_remove_descriminator.Designer.cs">
+      <DependentUpon>201605220800285_remove_descriminator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\AbstractModel.cs" />
     <Compile Include="Models\Abstract\IModel.cs" />
     <Compile Include="Models\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BindingModels\BindingModel.cs" />
-    <Compile Include="Models\BindingModels\OrderBindingModel.cs" />
     <Compile Include="Models\BindingModels\VisitProcedureBindingModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ClinicInfo.cs" />
@@ -433,6 +440,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605212226316_a_ya_ebu_chto_li.resx">
       <DependentUpon>201605212226316_a_ya_ebu_chto_li.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605220757372_add_total_cost.resx">
+      <DependentUpon>201605220757372_add_total_cost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605220800285_remove_descriminator.resx">
+      <DependentUpon>201605220800285_remove_descriminator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

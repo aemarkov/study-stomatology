@@ -42,30 +42,15 @@ namespace StomatologyAPI.Controllers
         }
 
 
+
+
 		[Authorize(Roles = "admin,doctor,dental_technican")]
-        public  new OrderBindingModel Get(int id)
+        public override Order Get(int id)
         {
             var order =  m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
-			var bind_order = new OrderBindingModel();
-			bind_order.Annotation = order.Annotation;
-			bind_order.ClinicInfo = order.ClinicInfo;
-			bind_order.Date = order.Date;
-			bind_order.DentalTechnican = order.DentalTechnican;
-			bind_order.DentalTechnicanId = order.DentalTechnicanId;
-			bind_order.Doctor = order.Doctor;
-			bind_order.DoctorId = order.DoctorId;
-			bind_order.FinishDate = order.FinishDate;
-			bind_order.Id = order.Id;
-			bind_order.IsClosed = order.IsClosed;
-			bind_order.IsFinished = order.IsFinished;
-			bind_order.Patient = order.Patient;
-			bind_order.PatientId = order.PatientId;
-			bind_order.Teeth = order.Teeth;
-
-			//Вычисление суммарной стоиости
-			bind_order.TotalCost = bind_order.Teeth.Select(x => x.Procedure).Aggregate((decimal)0, (a, x) => a + x.Cost);
-			return bind_order;
-        }
+			order.Cost =  order.Teeth.Select(x => x.Procedure).Aggregate((decimal)0, (a, x) => a + x.Cost);
+			return order;
+		}
 
         [Authorize(Roles ="admin,doctor")]
         public override HttpResponseMessage Put([FromBody] Order value)

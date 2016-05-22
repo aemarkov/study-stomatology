@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -54,6 +55,8 @@ namespace StomatologyAPI.Models
         [Required]
         public int ClinicInfoId { get; set; }
         public ClinicInfo ClinicInfo { get; set; }
+
+		public Decimal Cost { get; set; }
 
         /// <summary>
         /// Что делать для конкретного зуба
