@@ -70,7 +70,6 @@ namespace StomatologyAPI.Controllers
 
 				var doctor = get_current_doctor();
 				if (doctor == null) throw new EntityNotFoundException();
-
 				value.Doctor = doctor;
 
 				return base.Post(value);

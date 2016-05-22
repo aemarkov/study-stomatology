@@ -55,7 +55,11 @@ namespace StomatologyAPI.Controllers
 		[Authorize(Roles = "admin,doctor,dental_technican")]
         public override Order Get(int id)
         {
+			
             var order =  m_repository.Entities.Include("Teeth.Procedure").Include(x=>x.ClinicInfo).FirstOrDefault(x => x.Id == id);
+			if (order == null)
+				return null;
+
 			order.Cost =  order.Teeth.Select(x => x.Procedure).Aggregate((decimal)0, (a, x) => a + x.Cost);
 			return order;
 		}
@@ -79,9 +83,9 @@ namespace StomatologyAPI.Controllers
 				if (value.IsClosed) throw new EntityIsClosedException();
 				//value.IsFinished = false;
 
-				/*var doctor = get_current_doctor();
+				var doctor = get_current_doctor();
 				if (doctor == null) throw new EntityNotFoundException();
-				value.Doctor = get_current_doctor(); // doctor_repository.Entities.FirstOrDefault(x => x.ApplicationUserId == System.Web.HttpContext.Current.User.Identity.GetUserId<int>());*/
+				value.Doctor = doctor;
 
 
 				return base.Post(value);

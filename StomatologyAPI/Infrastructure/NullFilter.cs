@@ -20,7 +20,7 @@ namespace StomatologyAPI.Infrastructure
             object responseValue;
             bool hasContent = response.TryGetContentValue(out responseValue);
 
-            if (!hasContent && response.Content!=null)
+            if (!hasContent && response.Content!=null && response.StatusCode==HttpStatusCode.OK)
             {
                 actionExecutedContext.Response =  ResponseCreator.GenerateResponse(HttpStatusCode.NotFound, new EntityNotFoundException());
             }
