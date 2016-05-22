@@ -14,7 +14,7 @@ namespace StomatologyAPI.Abstract
     {
         IQueryable<M> Entities { get;}
         M GetById(int id);
-        void Create(M entity);
+        int Create(M entity);
         void Update(M entity);
         void Delete(M entity);
         void Delete(int id);

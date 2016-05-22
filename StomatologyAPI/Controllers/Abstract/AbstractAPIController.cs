@@ -1,6 +1,8 @@
-﻿using StomatologyAPI.Abstract;
+﻿using Newtonsoft.Json.Linq;
+using StomatologyAPI.Abstract;
 using StomatologyAPI.Infrastructure;
 using StomatologyAPI.Models.Abstract;
+using StomatologyAPI.Models.BindingModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,8 +72,12 @@ namespace StomatologyAPI.Controllers.Abstract
         {
             try
             {
-                m_repository.Create(value);
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                int id = m_repository.Create(value);
+				
+				//JObject obj = new JObject();
+				//obj["id"] = id;
+                return Request.CreateResponse<PutResponse>(HttpStatusCode.OK, new PutResponse(id));
+				
             }
             catch (EntityAlreadyExistsException exp)
             {

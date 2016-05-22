@@ -164,6 +164,7 @@ namespace StomatologyAPI.Controllers
 
                 order.IsFinished = true;
                 order.DentalTechnican = tech;
+				order.FinishDate = DateTime.Now;
 
                 m_repository.Update(order);
 

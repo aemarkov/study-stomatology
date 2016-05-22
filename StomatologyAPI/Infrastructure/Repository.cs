@@ -46,13 +46,14 @@ namespace StomatologyAPI.Infrastructure
         }
 
         //Создат
-        public void Create(M entity)
+        public int Create(M entity)
         {
 
             if (!context.Set<M>().Any(x => x.Id == entity.Id))
             {
                 context.Entry(entity).State = EntityState.Added;
                 context.SaveChanges();
+				return entity.Id;
             }
             else
                 throw new EntityAlreadyExistsException();

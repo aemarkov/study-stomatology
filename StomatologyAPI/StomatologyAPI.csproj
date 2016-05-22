@@ -314,6 +314,7 @@
     <Compile Include="Models\BindingModels\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BindingModels\BindingModel.cs" />
+    <Compile Include="Models\BindingModels\PutResponse.cs" />
     <Compile Include="Models\BindingModels\VisitProcedureBindingModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ClinicInfo.cs" />
