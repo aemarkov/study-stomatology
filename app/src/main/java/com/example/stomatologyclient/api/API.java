@@ -31,6 +31,7 @@ public interface API
     @GET("api/category/{id}")
     Call<Models.Category> getCategory(@Path("id") int id);
 
+    //TODO: PutResponse
     @PUT("api/category")
     Call<ResponseBody> putCategory(Models.Category category);
 
@@ -46,6 +47,7 @@ public interface API
     @GET("api/subcategory/{id}")
     Call<Models.Subcategory> getSubcategory(@Path("id") int id);
 
+    //TODO: PutResponse
     @PUT("api/subcategory")
     Call<ResponseBody> putSubcategory(Models.Subcategory subcategory);
 
@@ -63,6 +65,7 @@ public interface API
     @GET("api/Procedure/{id}")
     Call<Models.Procedure> getProcedure(@Path("id") int id);
 
+    //TODO: PutResponse
     @PUT("api/procedure")
     Call<ResponseBody> putProcedure(Models.Procedure procedure);
 
@@ -108,6 +111,7 @@ public interface API
     Call<Models.Visit> getVisit(@Path("id") int id);
 
     @PUT("api/PatientVisit")
+    //TODO: PutResponse
     Call<ResponseBody> putVisit(@Body Models.Visit visit);
 
     @POST("api/PatientVisit")
@@ -125,6 +129,27 @@ public interface API
     @GET("api/PatientVisit/Close/{visitId}")
     Call<ResponseBody> closeVisit(@Path("visitId")int visitId);
 
+    //Наряд-заказы
+    @GET("/api/order")
+    Call<List<Models.Order>> getOrders();
+
+    @GET("/api/order/{id}")
+    Call<Models.Order> getOrder(@Path("id") int id);
+
+    @PUT("/api/order")
+    Call<Models.PutResponse> putOrder(@Body Models.Order order);
+
+    @POST("/api/order")
+    Call<ResponseBody> postOrder(@Body Models.Order order);
+
+    @DELETE("/api/order/{id}")
+    Call<ResponseBody> deleteOrder(@Path("id") int id);
+
+    @POST("/api/order/AddTooth")
+    Call<ResponseBody> addToith(@Query("orderId") int orderId, @Query("toothNo") int toothNo, @Query("procedureId") int procedureId);
+
+    @DELETE("/api/order/RemoveTooth")
+    Call<ResponseBody> removeTooth(@Query("orderId") int orderId, @Query("toothNo") int toothNo);
 
     //Получение токена
     @FormUrlEncoded

@@ -76,6 +76,13 @@ public class VisitsActivity extends AbstractNavigationActivity implements OnList
             }
         });
 
+        //Проверка ролей
+        boolean is_doctor = StomatologyAccountManager.getRole(this)==StomatologyAccountManager.ROLE_DOCTOR;
+        if(is_doctor)
+            fab.setVisibility(View.VISIBLE);
+        else
+            fab.setVisibility(View.GONE);
+
         //Настройка запроса
         retrofit = RetrofitFactory.GetRetrofit(StomatologyAccountManager.getAuthToken(this));
         api = retrofit.create(API.class);

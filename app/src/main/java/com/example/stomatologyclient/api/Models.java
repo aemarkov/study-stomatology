@@ -38,6 +38,14 @@ public class Models
     }
 
     /**
+     * Чтобы получать Id новой сущности
+     */
+    public static class PutResponse
+    {
+        public int Id;
+    }
+
+    /**
      * Категория
      */
     public static class Category  extends NamedModel
@@ -177,7 +185,7 @@ public class Models
 
         @Override
         public String Name() {
-            return Date!=null ? df.format(Date) : "null";
+            return  "#"+Id+" - "+(Date!=null ? df.format(Date) : "null");
         }
     }
 
@@ -192,7 +200,6 @@ public class Models
         public java.util.Date Date;
         public Boolean IsFinished;
         public String Annotation;
-
         public Integer PatientId;
         public Integer DoctorId;
         public Integer DentalTechnicanId;
@@ -202,7 +209,7 @@ public class Models
 
         @Override
         public String Name() {
-            return df.format(Date);
+            return "#"+Id+" - "+df.format(Date);
         }
 
     }
