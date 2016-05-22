@@ -23,6 +23,10 @@ import retrofit2.http.Query;
  */
 public interface API
 {
+    //Инфа о клинике
+    @GET("api/clinicinfo")
+    Call<Models.ClinicInfo> getClinicInfo();
+
     // Категории
 
     @GET("api/category")

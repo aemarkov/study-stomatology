@@ -1,6 +1,5 @@
 package com.example.stomatologyclient;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,8 +16,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.stomatologyclient.auth.StomatologyAccountManager;
-import com.example.stomatologyclient.fragments.AboutFramgnet;
 import com.example.stomatologyclient.fragments.CategoriesFragment;
+import com.example.stomatologyclient.fragments.ClinicInfoFragment;
 import com.example.stomatologyclient.fragments.DoctorsFragment;
 import com.example.stomatologyclient.fragments.OrdersFragment;
 import com.example.stomatologyclient.fragments.PatientFragment;
@@ -51,6 +50,11 @@ public class MainActivity extends AppCompatActivity
 
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         header_username = (TextView)header.findViewById(R.id.header_username_view);
+
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container, new ClinicInfoFragment());
+        ft.commit();
     }
 
     @Override
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.nav_about)
         {
-            ft.replace(R.id.container,new AboutFramgnet());
+            ft.replace(R.id.container,new ClinicInfoFragment());
         }
         else if(id==R.id.nav_categories)
         {
