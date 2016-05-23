@@ -10,6 +10,7 @@ using StomatologyAPI.Abstract;
 using StomatologyAPI.Models.BindingModels;
 using StomatologyAPI.Infrastructure;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace StomatologyAPI.Controllers
 {
@@ -31,6 +32,16 @@ namespace StomatologyAPI.Controllers
         {
             return m_repository.Entities.Include(x => x.Visits).Include(x=>x.Orders).FirstOrDefault(x => x.Id == id);
         }
+
+		//Возвращает пользователю с ролью пациент его
+		[Authorize(Roles="patient")]
+		[Route("GetMe")]
+		[HttpGet]
+		public Patient GetMe()
+		{
+			var user_id = System.Web.HttpContext.Current.User.Identity.GetUserId<int>();
+			return m_repository.Entities.Include("Visits").FirstOrDefault(x => x.ApplicationUserId == user_id);
+		}
 
         [Authorize(Roles = "admin, doctor")]
         public HttpResponseMessage Put([FromBody] PatientBindingModel value)

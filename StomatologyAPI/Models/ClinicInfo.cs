@@ -18,6 +18,7 @@ namespace StomatologyAPI.Models
 		/// Название клиники
 		/// </summary>
         [Required]
+		[MaxLength(64)]
         public string Name { get; set; }
 
         /// <summary>

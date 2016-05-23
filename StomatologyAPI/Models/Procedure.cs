@@ -19,6 +19,7 @@ namespace StomatologyAPI.Models
         /// <summary>
         /// Название процедуры
         /// </summary>
+		[MaxLength(128)]
         public String Name { get; set; }
 
         /// <summary>

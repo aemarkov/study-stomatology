@@ -16,6 +16,7 @@ namespace StomatologyAPI.Infrastructure
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             var response = actionExecutedContext.Response;
+			if (response == null) return;
 
             object responseValue;
             bool hasContent = response.TryGetContentValue(out responseValue);

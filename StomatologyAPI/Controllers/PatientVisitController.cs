@@ -43,7 +43,7 @@ namespace StomatologyAPI.Controllers
             return base.Get();
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        [Authorize(Roles = "admin, doctor, patient")]
         public override PatientVisit Get(int id)
         {
             return m_repository.Entities.Include(x => x.Procedures).FirstOrDefault(x => x.Id == id);

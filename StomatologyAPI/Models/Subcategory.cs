@@ -24,6 +24,7 @@ namespace StomatologyAPI.Models
         /// <summary>
         /// Название подкатегории
         /// </summary>
+		[MaxLength(128)]
         public string Name { get; set; }
 
 
