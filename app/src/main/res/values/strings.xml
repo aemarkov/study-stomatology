@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Стоматология</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string name="About">О клинике</string>
+    <string name="Categories">Категории</string>
+    <string name="Doctors">Врачи</string>
+    <string name="Profile">Личный кабинет</string>
+    <string name="SignIn">Вход</string>
+    <string name="SignOut">Выход</string>
+    <string name="Visits">Посещения</string>
+    <string name="Patients">Пациенты</string>
+    <string name="Orders">Заказы</string>
+    <string name="Logout">Выход</string>
+
+
+    <!--  НАЗВАНИЕ ACTIVITY -->
+    <string name="title_activity_procedures">Процедура</string>
+    <string name="title_activity_category">Категория</string>
+    <string name="title_activity_new_account">Регистрация</string>
+    <string name="title_activity_login">Вход</string>
+    <string name="title_activity_activity_login">Вход</string>
+    <string name="title_activity_register">Регистрация</string>
+    <string name="title_activity_patient"></string>
+    <string name="title_activity_visits">Посещения</string>
+    <string name="title_activity_visit">Посещение</string>
+    <string name="title_activity_doctor">Наши врачи</string>
+    <string name="title_activity_patient_orders">Наряд-заказы</string>
+    <string name="title_activity_new_order">Редактирование заказа</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sex">
+        <item>Муж</item>
+        <item>Жен</item>
+    </string-array>
+
+
+</resources>
